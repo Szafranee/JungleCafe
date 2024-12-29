@@ -1,0 +1,6 @@
+@JungleCafe.Server_HostAddress = http://localhost:5071
+
+GET {{JungleCafe.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
