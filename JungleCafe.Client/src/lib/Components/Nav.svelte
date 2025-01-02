@@ -1,6 +1,7 @@
 ﻿<script>
+    import {Link} from "svelte-routing";
+
     export let activePage = 'home';
-    export let onViewAnimalsClick;
 </script>
 
 <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-sm">
@@ -15,49 +16,50 @@
             </div>
 
             <div class="hidden md:flex items-center space-x-8">
-                <a
-                        href="/"
-                        class="text-jungle-brown hover:text-jungle-primary transition-colors font-medium"
-                        class:text-jungle-primary={activePage === 'home'}
+                <Link
+                        to="/"
+                        class={`text-jungle-brown hover:text-jungle-primary transition-colors font-medium ${
+                            activePage === 'home' ? 'text-jungle-primary' : ''
+                        }`}
                 >
                     Home
-                </a>
-                <a
-                        href="/book"
+                </Link>
+                <Link
+                        to="/book"
                         class="text-jungle-brown hover:text-jungle-primary transition-colors font-medium"
                 >
                     Book a Table
-                </a>
-                <a
-                        href="/menu"
+                </Link>
+                <Link
+                        to="/menu"
                         class="text-jungle-brown hover:text-jungle-primary transition-colors font-medium"
                 >
                     Menu
-                </a>
+                </Link>
+
                 <a
                         href="#animals"
                         on:click|preventDefault={() => {
                             document.getElementById('animals').scrollIntoView({ behavior: 'smooth' });
-                            // Expand the animal gallery
-                            onViewAnimalsClick();
                           }}
                         class="text-jungle-brown hover:text-jungle-primary transition-colors font-medium"
                 >
                     Our Animals
                 </a>
-                <a
-                        href="/events"
+
+                <Link
+                        to="/events"
                         class="text-jungle-brown hover:text-jungle-primary transition-colors font-medium"
                 >
                     Events
-                </a>
-                <a
-                        href="/login"
+                </Link>
+                <Link
+                        to="/login"
                         class="bg-jungle-accent text-white px-6 py-2 rounded-full font-medium
-                 hover:bg-jungle-secondary transition-colors shadow-sm"
+                           hover:bg-jungle-secondary transition-colors shadow-sm"
                 >
                     Sign In
-                </a>
+                </Link>
             </div>
         </div>
     </div>

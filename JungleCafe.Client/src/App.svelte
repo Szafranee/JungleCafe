@@ -1,26 +1,19 @@
 <script>
-    import Nav from "@components/Nav.svelte";
-    import WelcomeSection from "@components/WelcomeSection.svelte";
-    import AnimalGallery from "@components/AnimalGallery.svelte";
-    import InfoSection from "@components/InfoSection.svelte";
-    import Footer from "@components/Footer.svelte";
+    import { Router, Route } from "svelte-routing";
+    import Nav from './lib/components/Nav.svelte';
+    import Home from './routes/Home.svelte';  // przeniesiona zawartość głównej strony
+    import Login from './routes/Login.svelte';
+    import Register from './routes/Register.svelte';
 
-    let animalGalleryComponent;
-
-    function handleViewAnimalsClick() {
-        if (animalGalleryComponent) {
-            animalGalleryComponent.expand();
-        }
-    }
+    export let url = "";
 </script>
 
+<Router {url}>
+    <Nav />
 
-<div class="min-h-screen bg-white">
-    <Nav onViewAnimalsClick={handleViewAnimalsClick} />
     <main>
-        <WelcomeSection />
-        <AnimalGallery bind:this={animalGalleryComponent} />
-        <InfoSection />
+        <Route path="/" component={Home} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
     </main>
-    <Footer />
-</div>
+</Router>

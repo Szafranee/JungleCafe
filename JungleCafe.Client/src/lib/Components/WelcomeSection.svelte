@@ -1,5 +1,5 @@
 ﻿<section class="pt-24 pb-16 px-4 relative overflow-hidden">
-    <div class="absolute inset-0 bg-leaf-pattern opacity-5"></div>
+    <div class="absolute inset-0 bg-leaves-pattern opacity-5"></div>
     <div class="max-w-7xl mx-auto relative">
         <div class="grid md:grid-cols-2 gap-12 items-center">
             <div class="space-y-8">

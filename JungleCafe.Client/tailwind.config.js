@@ -17,7 +17,7 @@ export default {
         display: ['"Playfair Display"', 'serif']
       },
       backgroundImage: {
-        'leaf-pattern': "url('/img/leaf_pattern.jpg')",
+        'leaves-pattern': "url('/img/leaves_pattern.png')",
       }
     }
   },
