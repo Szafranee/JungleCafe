@@ -1,5 +1,6 @@
 ﻿<script>
     export let activePage = 'home';
+    export let onViewAnimalsClick;
 </script>
 
 <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-sm">
@@ -22,16 +23,27 @@
                     Home
                 </a>
                 <a
+                        href="/book"
+                        class="text-jungle-brown hover:text-jungle-primary transition-colors font-medium"
+                >
+                    Book a Table
+                </a>
+                <a
                         href="/menu"
                         class="text-jungle-brown hover:text-jungle-primary transition-colors font-medium"
                 >
                     Menu
                 </a>
                 <a
-                        href="/book"
+                        href="#animals"
+                        on:click|preventDefault={() => {
+                            document.getElementById('animals').scrollIntoView({ behavior: 'smooth' });
+                            // Expand the animal gallery
+                            onViewAnimalsClick();
+                          }}
                         class="text-jungle-brown hover:text-jungle-primary transition-colors font-medium"
                 >
-                    Book a Table
+                    Our Animals
                 </a>
                 <a
                         href="/events"

@@ -4,13 +4,22 @@
     import AnimalGallery from "@components/AnimalGallery.svelte";
     import InfoSection from "@components/InfoSection.svelte";
     import Footer from "@components/Footer.svelte";
+
+    let animalGalleryComponent;
+
+    function handleViewAnimalsClick() {
+        if (animalGalleryComponent) {
+            animalGalleryComponent.expand();
+        }
+    }
 </script>
 
+
 <div class="min-h-screen bg-white">
-    <Nav />
+    <Nav onViewAnimalsClick={handleViewAnimalsClick} />
     <main>
         <WelcomeSection />
-        <AnimalGallery />
+        <AnimalGallery bind:this={animalGalleryComponent} />
         <InfoSection />
     </main>
     <Footer />
