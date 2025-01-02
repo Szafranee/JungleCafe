@@ -2,12 +2,51 @@
     export let activePage = 'home';
 </script>
 
-<nav class="nav-main">
-    <img alt="Big Logo" class="logo_big" src="/img/logo_big_no_bg.png">
-    <a class:active={activePage === 'home'} href="/">Main page</a>
-    <a class:active={activePage === 'menu'} href="/menu">Menu</a>
-    <a class:active={activePage === 'reservation'} href="/reservation">Reservation</a>
-    <a class:active={activePage === 'events'} href="/events">Events</a>
-    <a class:active={activePage === 'login'} href="/login">Log in</a>
-    <a class:active={activePage === 'register'} href="/register">Sign up</a>
+<nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-sm">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex items-center">
+                <img
+                        src="/img/logo_big_no_bg.png"
+                        alt="Jungle Cafe"
+                        class="h-14 w-auto transform transition hover:scale-110"
+                />
+            </div>
+
+            <div class="hidden md:flex items-center space-x-8">
+                <a
+                        href="/"
+                        class="text-jungle-brown hover:text-jungle-primary transition-colors font-medium"
+                        class:text-jungle-primary={activePage === 'home'}
+                >
+                    Home
+                </a>
+                <a
+                        href="/menu"
+                        class="text-jungle-brown hover:text-jungle-primary transition-colors font-medium"
+                >
+                    Menu
+                </a>
+                <a
+                        href="/book"
+                        class="text-jungle-brown hover:text-jungle-primary transition-colors font-medium"
+                >
+                    Book a Table
+                </a>
+                <a
+                        href="/events"
+                        class="text-jungle-brown hover:text-jungle-primary transition-colors font-medium"
+                >
+                    Events
+                </a>
+                <a
+                        href="/login"
+                        class="bg-jungle-accent text-white px-6 py-2 rounded-full font-medium
+                 hover:bg-jungle-secondary transition-colors shadow-sm"
+                >
+                    Sign In
+                </a>
+            </div>
+        </div>
+    </div>
 </nav>

@@ -4,15 +4,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        'jungle-green': {
-          light: '#acde70',
-          DEFAULT: '#7ab940',
-          dark: '#69a336'
-        },
-        'jungle-bg': '#c1dea3'
+        'jungle': {
+          primary: '#2D5A27',    // Dark green
+          secondary: '#4A8B3B',  // Medium green
+          accent: '#82C341',     // Light green
+          brown: '#634832',      // Warm brown
+          sand: '#D4B59D',       // Sand accent
+        }
       },
       fontFamily: {
-        playwrite: ['"Playwrite GB S"', 'cursive']
+        sans: ['"Poppins"', 'sans-serif'],
+        display: ['"Playfair Display"', 'serif']
+      },
+      backgroundImage: {
+        'leaf-pattern': "url('/img/leaf_pattern.jpg')",
       }
     }
   },

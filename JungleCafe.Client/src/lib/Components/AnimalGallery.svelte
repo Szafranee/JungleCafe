@@ -2,29 +2,49 @@
     export let animals = [
         {
             image: "/img/ara_araruna.jpeg",
-            name: "Mary the Blue-and-yellow Macaw",
-            alt: "Ara araruna"
+            name: "Mary",
+            species: "Blue-and-yellow Macaw",
+            description: "Our charming resident who loves to greet guests"
         },
         {
             image: "/img/chameleon.jpg",
-            name: "Max the Chameleon",
-            alt: "Chameleon"
+            name: "Max",
+            species: "Veiled Chameleon",
+            description: "Watch him change colors throughout the day"
         },
         {
             image: "/img/hedgehog.jpeg",
-            name: "Filip the Hedgehog",
-            alt: "Hedgehog"
+            name: "Filip",
+            species: "African Pygmy Hedgehog",
+            description: "The cutest little ball of spikes you'll ever meet"
         }
     ];
 </script>
 
-<h2 class="text-heading">Our animals:</h2>
-<div class="gallery">
-    {#each animals as animal}
-        <figure>
-            <img alt={animal.alt} class="gallery__image" src={animal.image}>
-            <figcaption class="text-subheading">{animal.name}</figcaption>
-        </figure>
-    {/each}
-</div>
-<h2 class="text-heading">...and many, many more!</h2>
+<section class="py-16 px-4 bg-gray-50">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-4xl font-display text-center text-jungle-brown mb-12">
+            Meet Our Furry & Feathered Friends
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            {#each animals as animal}
+                <div
+                        class="bg-white rounded-xl shadow-lg overflow-hidden transform
+                 transition hover:scale-105 hover:shadow-xl"
+                >
+                    <img
+                            src={animal.image}
+                            alt={animal.species}
+                            class="w-full h-64 object-cover"
+                    />
+                    <div class="p-6">
+                        <h3 class="text-xl font-medium text-jungle-brown">{animal.name}</h3>
+                        <p class="text-jungle-secondary">{animal.species}</p>
+                        <p class="text-gray-600 mt-2">{animal.description}</p>
+                    </div>
+                </div>
+            {/each}
+        </div>
+    </div>
+</section>
