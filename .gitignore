@@ -398,3 +398,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+/JungleCafe.Server/appsettings.Development.json
+/JungleCafe.Server/.env

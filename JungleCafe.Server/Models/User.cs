@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace JungleCafe.Server.Models;
 
-namespace JungleCafe.Server.Models;
-
-public partial class User
+public class User
 {
     public int Id { get; set; }
 

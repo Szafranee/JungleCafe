@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using DotNetEnv;
+﻿using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 
 namespace JungleCafe.Server.Models;

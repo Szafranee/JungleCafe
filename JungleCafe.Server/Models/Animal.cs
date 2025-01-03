@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace JungleCafe.Server.Models;
 
-namespace JungleCafe.Server.Models;
-
-public partial class Animal
+public class Animal
 {
     public int Id { get; set; }
 
