@@ -401,3 +401,4 @@ FodyWeavers.xsd
 
 /JungleCafe.Server/appsettings.Development.json
 /JungleCafe.Server/.env
+.qodo

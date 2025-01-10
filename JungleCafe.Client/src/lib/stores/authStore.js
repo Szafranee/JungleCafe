@@ -1,5 +1,4 @@
-﻿// src/lib/stores/authStore.js
-import { writable } from 'svelte/store';
+﻿import { writable } from 'svelte/store';
 
 const createAuthStore = () => {
     // Initial state - check if user is already logged in (from localStorage)

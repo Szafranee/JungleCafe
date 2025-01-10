@@ -25,6 +25,7 @@ builder.Services.AddCors(options =>
 // Add DbContext
 builder.Services.AddDbContext<CafeDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 // Add services
 builder.Services.AddScoped<IAuthService, AuthService>();
 

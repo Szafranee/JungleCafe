@@ -1,9 +1,8 @@
 ﻿<script>
     import { Link } from "svelte-routing";
-    import { authStore } from "../stores/authStore.js"
+    import { authStore } from "../../stores/authStore.js"
 
     export let activePage = 'home';
-    export let onViewAnimalsClick;
 </script>
 
 <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-sm">
