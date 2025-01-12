@@ -1,8 +1,19 @@
 ﻿<script>
-    import { Link } from "svelte-routing";
-    import { authStore } from "../../stores/authStore.js"
+    import {Link, useLocation} from "svelte-routing";
+    import {authStore} from "../../stores/authStore.js"
 
     export let activePage = 'home';
+
+    const location = useLocation();
+
+    function handleAnimalsSectionClick(event) {
+        event.preventDefault();
+        if ($location.pathname !== '/') {
+            window.location.href = '/#animals';
+        } else {
+            document.getElementById('animals')?.scrollIntoView({behavior: 'smooth'});
+        }
+    }
 </script>
 
 <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-sm">
@@ -42,9 +53,7 @@
 
                 <a
                         href="#animals"
-                        on:click|preventDefault={() => {
-                            document.getElementById('animals').scrollIntoView({ behavior: 'smooth' });
-                          }}
+                        on:click|preventDefault={handleAnimalsSectionClick}
                         class="text-jungle-brown hover:text-jungle-primary transition-colors font-medium"
                 >
                     Our Animals
