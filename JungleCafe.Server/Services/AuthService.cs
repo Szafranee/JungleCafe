@@ -17,9 +17,7 @@ public class AuthService(CafeDbContext context, IConfiguration configuration) : 
             .FirstOrDefaultAsync(u => u.Email == request.Email);
 
         if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
-        {
             throw new UnauthorizedAccessException("Invalid email or password");
-        }
 
         var token = GenerateJwtToken(user);
 
@@ -37,9 +35,7 @@ public class AuthService(CafeDbContext context, IConfiguration configuration) : 
     public async Task<AuthResponse> Register(RegisterRequest request)
     {
         if (await context.Users.AnyAsync(u => u.Email == request.Email))
-        {
             throw new InvalidOperationException("This email already exists");
-        }
 
         var user = new User
         {
@@ -76,7 +72,7 @@ public class AuthService(CafeDbContext context, IConfiguration configuration) : 
         {
             Subject = new ClaimsIdentity([
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Email, user.Email)
             ]),
             Expires = DateTime.UtcNow.AddDays(7),
             SigningCredentials = new SigningCredentials(

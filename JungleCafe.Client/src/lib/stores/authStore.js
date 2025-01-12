@@ -1,20 +1,43 @@
 ﻿import { writable } from 'svelte/store';
 
 const createAuthStore = () => {
-    // Initial state - check if user is already logged in (from localStorage)
-    const storedToken = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
+    // Bezpieczne pobieranie danych z localStorage
+    const getStoredData = () => {
+        try {
+            const token = localStorage.getItem('token');
+            let user = null;
+            try {
+                const storedUser = localStorage.getItem('user');
+                if (storedUser) {
+                    user = JSON.parse(storedUser);
+                }
+            } catch (e) {
+                console.error('Error parsing user data, clearing localStorage');
+                localStorage.removeItem('user');
+                localStorage.removeItem('token');
+            }
 
-    const { subscribe, set, update } = writable({
-        user: storedUser ? JSON.parse(storedUser) : null,
-        token: storedToken || null,
-        isAuthenticated: !!storedToken
-    });
+            return {
+                token,
+                user,
+                isAuthenticated: !!token && !!user
+            };
+        } catch (e) {
+            console.error('Error getting stored data:', e);
+            return {
+                token: null,
+                user: null,
+                isAuthenticated: false
+            };
+        }
+    };
+
+    const initialState = getStoredData();
+    const { subscribe, set, update } = writable(initialState);
 
     return {
         subscribe,
 
-        // Login
         login: async (email, password) => {
             try {
                 const response = await fetch('/api/auth/login', {
@@ -22,9 +45,8 @@ const createAuthStore = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ email, password})
+                    body: JSON.stringify({ email, password })
                 });
-
 
                 if (!response.ok) {
                     const error = await response.json();
@@ -33,63 +55,21 @@ const createAuthStore = () => {
 
                 const data = await response.json();
 
-                // Save token and user data to localStorage
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('user', JSON.stringify(data.user));
+                // Bezpieczne zapisywanie danych
+                if (data && data.token) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user || {}));
 
-                // Update store
-                set({
-                    user: data.user,
-                    token: data.token,
-                    isAuthenticated: true
-                });
-
-                return { success: true };
-            } catch (error) {
-                return {
-                    success: false,
-                    error: error.message
-                };
-            }
-        },
-
-        // Register
-        register: async (userData) => {
-            try {
-                const response = await fetch('/api/auth/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        email: userData.email,
-                        password: userData.password,
-                        firstName: userData.firstName,
-                        lastName: userData.lastName,
-                        phoneNumber: userData.phoneNumber || null
-                    })
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.message || 'Registration failed');
+                    set({
+                        user: data.user,
+                        token: data.token,
+                        isAuthenticated: true
+                    });
                 }
 
-                const data = await response.json();
-
-                // Save token and user data to localStorage
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('user', JSON.stringify(data.user));
-
-                // Update store
-                set({
-                    user: data.user,
-                    token: data.token,
-                    isAuthenticated: true
-                });
-
                 return { success: true };
             } catch (error) {
+                console.error('Login error:', error);
                 return {
                     success: false,
                     error: error.message
@@ -97,45 +77,15 @@ const createAuthStore = () => {
             }
         },
 
-        // Logout
         logout: () => {
-            // Remove token and user data from localStorage
             localStorage.removeItem('token');
             localStorage.removeItem('user');
 
-            // Reset store
             set({
                 user: null,
                 token: null,
                 isAuthenticated: false
             });
-        },
-
-        // Update user data
-        updateUser: (userData) => {
-            update(state => ({
-                ...state,
-                user: { ...state.user, ...userData }
-            }));
-            localStorage.setItem('user', JSON.stringify(userData));
-        },
-
-        // Check if user is authenticated
-        checkAuth: async () => {
-            const token = localStorage.getItem('token');
-            if (!token) return false;
-
-            try {
-                const response = await fetch('/api/auth/verify', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-
-                return response.ok;
-            } catch {
-                return false;
-            }
         }
     };
 };
