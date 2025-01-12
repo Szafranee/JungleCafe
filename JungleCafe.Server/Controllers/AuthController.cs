@@ -26,7 +26,7 @@ public class AuthController : ControllerBase
         }
         catch (UnauthorizedAccessException)
         {
-            return Unauthorized("Invalid email or password");
+            return Unauthorized(new { message = "Invalid email or password" });
         }
     }
 
@@ -40,7 +40,7 @@ public class AuthController : ControllerBase
         }
         catch (InvalidOperationException ex)
         {
-            return BadRequest(ex.Message);
+            return BadRequest(new { message = ex.Message });
         }
     }
 }

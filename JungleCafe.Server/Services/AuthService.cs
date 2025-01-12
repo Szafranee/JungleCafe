@@ -9,20 +9,11 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace JungleCafe.Server.Services;
 
-public class AuthService : IAuthService
+public class AuthService(CafeDbContext context, IConfiguration configuration) : IAuthService
 {
-    private readonly CafeDbContext _context;
-    private readonly IConfiguration _configuration;
-
-    public AuthService(CafeDbContext context, IConfiguration configuration)
-    {
-        _context = context;
-        _configuration = configuration;
-    }
-
     public async Task<AuthResponse> Login(LoginRequest request)
     {
-        var user = await _context.Users
+        var user = await context.Users
             .FirstOrDefaultAsync(u => u.Email == request.Email);
 
         if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
@@ -45,9 +36,9 @@ public class AuthService : IAuthService
 
     public async Task<AuthResponse> Register(RegisterRequest request)
     {
-        if (await _context.Users.AnyAsync(u => u.Email == request.Email))
+        if (await context.Users.AnyAsync(u => u.Email == request.Email))
         {
-            throw new InvalidOperationException("Email already exists");
+            throw new InvalidOperationException("This email already exists");
         }
 
         var user = new User
@@ -57,12 +48,12 @@ public class AuthService : IAuthService
             FirstName = request.FirstName,
             LastName = request.LastName,
             PhoneNumber = request.PhoneNumber,
-            Role = "User", // domyślna rola
+            Role = "User", // default role
             CreatedAt = DateTime.UtcNow
         };
 
-        _context.Users.Add(user);
-        await _context.SaveChangesAsync();
+        context.Users.Add(user);
+        await context.SaveChangesAsync();
 
         var token = GenerateJwtToken(user);
 
@@ -80,15 +71,13 @@ public class AuthService : IAuthService
     private string GenerateJwtToken(User user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
+        var key = Encoding.ASCII.GetBytes(configuration["Jwt:Key"]);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Subject = new ClaimsIdentity(new[]
-            {
+            Subject = new ClaimsIdentity([
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role)
-            }),
+            ]),
             Expires = DateTime.UtcNow.AddDays(7),
             SigningCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(key),

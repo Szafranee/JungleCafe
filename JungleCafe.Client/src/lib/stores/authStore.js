@@ -22,8 +22,9 @@ const createAuthStore = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ email, password })
+                    body: JSON.stringify({ email, password})
                 });
+
 
                 if (!response.ok) {
                     const error = await response.json();
