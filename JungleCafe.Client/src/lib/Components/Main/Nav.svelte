@@ -61,7 +61,7 @@
                     <button
                             on:click={() => {
                             authStore.logout();
-                            window.location.href = '/'; // przekieruj na stronę główną po wylogowaniu
+                            window.location.href = '/'; // Return to home page
                         }}
                             class="bg-jungle-accent text-white px-6 py-2 rounded-full font-medium
                                hover:bg-jungle-secondary transition-colors shadow-sm"

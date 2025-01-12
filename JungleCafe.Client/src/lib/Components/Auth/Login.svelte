@@ -1,6 +1,6 @@
 ﻿<script>
     import { Link } from "svelte-routing";
-    import { authStore } from '../lib/stores/authStore';
+    import { authStore } from '../../stores/authStore.js';
     import { navigate } from "svelte-routing";
 
     let isLoading = false;

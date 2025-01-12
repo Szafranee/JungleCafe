@@ -1,9 +1,9 @@
 <script>
     import { Router, Route } from "svelte-routing";
     import Nav from './lib/Components/Main/Nav.svelte';
-    import Home from './routes/Home.svelte';  // przeniesiona zawartość głównej strony
-    import Login from './routes/Login.svelte';
-    import Register from './routes/Register.svelte';
+    import Home from './lib/Components/Home.svelte';
+    import Login from './lib/Components/Auth/Login.svelte';
+    import Register from './lib/Components/Auth/Register.svelte';
     import Menu from "./lib/Components/Menu/Menu.svelte";
 
     export let url = "";
