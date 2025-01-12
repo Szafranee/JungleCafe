@@ -28,6 +28,8 @@ builder.Services.AddDbContext<CafeDbContext>(options =>
 
 // Add services
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IMenuService, MenuService>();
+builder.Services.AddScoped<IEventService, EventService>();
 
 // Add JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

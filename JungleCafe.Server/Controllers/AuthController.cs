@@ -7,21 +7,14 @@ namespace JungleCafe.Server.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController : ControllerBase
+public class AuthController(IAuthService authService) : ControllerBase
 {
-    private readonly IAuthService _authService;
-
-    public AuthController(IAuthService authService)
-    {
-        _authService = authService;
-    }
-
     [HttpPost("login")]
     public async Task<ActionResult<AuthResponse>> Login(LoginRequest request)
     {
         try
         {
-            var response = await _authService.Login(request);
+            var response = await authService.Login(request);
             return Ok(response);
         }
         catch (UnauthorizedAccessException)
@@ -35,7 +28,7 @@ public class AuthController : ControllerBase
     {
         try
         {
-            var response = await _authService.Register(request);
+            var response = await authService.Register(request);
             return Ok(response);
         }
         catch (InvalidOperationException ex)

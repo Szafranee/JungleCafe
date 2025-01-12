@@ -1,7 +1,7 @@
 ﻿import { writable } from 'svelte/store';
 
 const createAuthStore = () => {
-    // Bezpieczne pobieranie danych z localStorage
+    // Safe way to get stored data
     const getStoredData = () => {
         try {
             const token = localStorage.getItem('token');
