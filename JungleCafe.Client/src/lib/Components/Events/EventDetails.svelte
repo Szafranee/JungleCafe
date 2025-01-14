@@ -125,7 +125,7 @@
                         </svg>
                         <div>
                             <div>
-                                {new Date(event.startDate).toLocaleDateString('en-US', {
+                                {new Date(event.startDate).toLocaleDateString('en-GB', {
                                     weekday: 'long',
                                     year: 'numeric',
                                     month: 'long',
@@ -133,11 +133,11 @@
                                 })}
                             </div>
                             <div class="text-sm">
-                                {new Date(event.startDate).toLocaleTimeString('en-US', {
+                                {new Date(event.startDate).toLocaleTimeString('en-GB', {
                                     hour: '2-digit',
                                     minute: '2-digit'
                                 })} -
-                                {new Date(event.endDate).toLocaleTimeString('en-US', {
+                                {new Date(event.endDate).toLocaleTimeString('en-GB', {
                                     hour: '2-digit',
                                     minute: '2-digit'
                                 })}

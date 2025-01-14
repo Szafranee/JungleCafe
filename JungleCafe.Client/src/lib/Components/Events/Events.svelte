@@ -1,5 +1,4 @@
-﻿// Events.svelte
-<script>
+﻿<script>
     import { onMount } from 'svelte';
     import { fade, fly } from 'svelte/transition';
     import { backOut } from 'svelte/easing';
@@ -8,7 +7,11 @@
     let events = [];
     let loading = true;
     let error = null;
-    let filter = 'upcoming'; // 'upcoming' or 'past'
+    let filter = 'upcoming';
+
+    // Pagination
+    let currentPage = 1;
+    let eventsPerPage = 6;
 
     // Fetch events from API
     async function fetchEvents() {
@@ -32,10 +35,23 @@
         return filter === 'upcoming' ? eventDate >= now : eventDate < now;
     });
 
+    // Pagination calculations
+    $: totalPages = Math.ceil(filteredEvents.length / eventsPerPage);
+    $: paginatedEvents = filteredEvents.slice(
+        (currentPage - 1) * eventsPerPage,
+        currentPage * eventsPerPage
+    );
+
+    function goToPage(page) {
+        if (page >= 1 && page <= totalPages) {
+            currentPage = page;
+        }
+    }
+
     onMount(fetchEvents);
 </script>
 
-<div class="min-h-screen bg-gray-50 pt-20 bg-leaves-pattern bg-blend-overlay">
+<div class="min-h-screen bg-gray-50 pt-20">
     <div class="max-w-7xl mx-auto px-4 py-8">
         <h1 class="text-4xl font-display text-center mb-12 text-jungle-brown">
             Jungle Café Events
@@ -48,7 +64,10 @@
                        {filter === 'upcoming' ?
                          'bg-jungle-accent text-white' :
                          'bg-white text-jungle-brown border border-jungle-accent'}"
-                    on:click={() => filter = 'upcoming'}
+                    on:click={() => {
+                    filter = 'upcoming';
+                    currentPage = 1;
+                }}
             >
                 Upcoming Events
             </button>
@@ -57,7 +76,10 @@
                        {filter === 'past' ?
                          'bg-jungle-accent text-white' :
                          'bg-white text-jungle-brown border border-jungle-accent'}"
-                    on:click={() => filter = 'past'}
+                    on:click={() => {
+                    filter = 'past';
+                    currentPage = 1;
+                }}
             >
                 Past Events
             </button>
@@ -71,20 +93,21 @@
             <div class="text-red-500 text-center p-4">
                 {error}
             </div>
-        {:else if filteredEvents.length === 0}
+        {:else if paginatedEvents.length === 0}
             <div class="text-center text-gray-600 p-8">
                 No {filter} events found.
             </div>
         {:else}
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {#each filteredEvents as event, i}
+            <!-- Events Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                {#each paginatedEvents as event, i}
                     <div
                             class="bg-white rounded-xl shadow-lg overflow-hidden transform
                                transition duration-300 hover:scale-105"
                             in:fly={{
                             y: 50,
                             duration: 600,
-                            delay: i * 50,
+                            delay: i * 150,
                             opacity: 0,
                             easing: backOut
                         }}
@@ -112,7 +135,7 @@
                                           d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
                                 <span>
-                                    {new Date(event.startDate).toLocaleDateString('en-US', {
+                                    {new Date(event.startDate).toLocaleDateString('en-GB', {
                                         weekday: 'long',
                                         year: 'numeric',
                                         month: 'long',
@@ -122,26 +145,47 @@
                             </div>
 
                             <p class="text-gray-600 mb-4">
-                                {event.description?.slice(0, 100)}
-                                {event.description?.length > 100 ? '...' : ''}
+                                {event.description ? event.description.slice(0, 100) : ''}
+                                {event.description && event.description.length > 100 ? '...' : ''}
                             </p>
 
-                            {#if event.maxParticipants}
-                                <div class="text-sm text-jungle-secondary mb-4">
-                                    Limited to {event.maxParticipants} participants
-                                </div>
-                            {/if}
-
-                            <a
-                                    href={`/events/${event.id}`}
-                                    class="block w-full text-center jungle-btn-primary"
-                            >
+                            <a href={`/events/${event.id}`} class="block w-full text-center jungle-btn-primary">
                                 Learn More
                             </a>
                         </div>
                     </div>
                 {/each}
             </div>
+
+            <!-- Pagination -->
+            {#if totalPages > 1}
+                <div class="flex justify-center space-x-2 mt-8">
+                    <button
+                            class="px-4 py-2 rounded-lg border {currentPage === 1 ? 'bg-gray-100 text-gray-400' : 'hover:bg-gray-50'}"
+                            disabled={currentPage === 1}
+                            on:click={() => goToPage(currentPage - 1)}
+                    >
+                        Previous
+                    </button>
+
+                    {#each Array(totalPages) as _, i}
+                        <button
+                                class="px-4 py-2 rounded-lg border {currentPage === i + 1 ? 'bg-jungle-accent text-white' : 'hover:bg-gray-50'}"
+                                on:click={() => goToPage(i + 1)}
+                        >
+                            {i + 1}
+                        </button>
+                    {/each}
+
+                    <button
+                            class="px-4 py-2 rounded-lg border {currentPage === totalPages ? 'bg-gray-100 text-gray-400' : 'hover:bg-gray-50'}"
+                            disabled={currentPage === totalPages}
+                            on:click={() => goToPage(currentPage + 1)}
+                    >
+                        Next
+                    </button>
+                </div>
+            {/if}
         {/if}
     </div>
 </div>
