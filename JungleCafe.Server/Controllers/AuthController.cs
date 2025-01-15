@@ -1,6 +1,6 @@
 ﻿using JungleCafe.Server.RequestModels;
 using JungleCafe.Server.ResponseModels;
-using JungleCafe.Server.Services;
+using JungleCafe.Server.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JungleCafe.Server.Controllers;

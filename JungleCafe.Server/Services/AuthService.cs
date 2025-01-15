@@ -4,6 +4,7 @@ using System.Text;
 using JungleCafe.Server.Models;
 using JungleCafe.Server.RequestModels;
 using JungleCafe.Server.ResponseModels;
+using JungleCafe.Server.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 

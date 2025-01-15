@@ -1,7 +1,6 @@
 ﻿using JungleCafe.Server.Models;
-using JungleCafe.Server.Services;
+using JungleCafe.Server.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace JungleCafe.Server.Controllers;
 

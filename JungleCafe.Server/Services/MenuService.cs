@@ -1,4 +1,5 @@
 ﻿using JungleCafe.Server.Models;
+using JungleCafe.Server.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

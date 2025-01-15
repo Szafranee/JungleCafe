@@ -1,6 +1,7 @@
 using System.Text;
 using JungleCafe.Server.Models;
 using JungleCafe.Server.Services;
+using JungleCafe.Server.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -30,6 +31,8 @@ builder.Services.AddDbContext<CafeDbContext>(options =>
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMenuService, MenuService>();
 builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IReservationsService, ReservationsService>();
+builder.Services.AddScoped<ITablesService, TablesService>();
 
 // Add JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
