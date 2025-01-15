@@ -7,6 +7,7 @@
     import Menu from "./lib/Components/Menu/Menu.svelte";
     import Events from "./lib/Components/Events/Events.svelte";
     import EventDetails from "./lib/Components/Events/EventDetails.svelte";
+    import BookingPage from "./lib/Components/Reservations/BookingPage.svelte";
 
     export let url = "";
 </script>
@@ -16,9 +17,10 @@
 
     <main>
         <Route path="/" component={Home} />
+        <Route path="/book" component={BookingPage} />
+        <Route path="/menu" component={Menu} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
-        <Route path="/menu" component={Menu} />
         <Route path="/events" component={Events} />
         <Route
                 path="/events/:id"
