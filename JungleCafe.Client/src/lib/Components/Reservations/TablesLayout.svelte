@@ -43,9 +43,7 @@
     }
 
     function getTableInfo(number) {
-        const table = tables.find(t => t.number === number);
-        console.log(`Looking for table ${number}:`, table); // Debug log
-        return table;
+        return tables.find(t => t.number === number);
     }
 </script>
 

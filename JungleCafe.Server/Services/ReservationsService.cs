@@ -22,7 +22,15 @@ public class ReservationsService(CafeDbContext context) : IReservationsService
     public async Task<Reservation> CreateReservation(ReservationRequest request, int userId)
     {
         var isAvailable = await IsTableAvailable(request.TableId, request.ReservationDate, request.Duration);
-        if (!isAvailable) throw new InvalidOperationException("Table is already reserved for this time");
+        if (!isAvailable)
+        {
+            throw new InvalidOperationException("Table is already reserved for this time");
+        }
+
+        if (request.ReservationDate < DateTime.UtcNow.AddMinutes(30))
+        {
+            throw new InvalidOperationException("Reservation has to made at least 30 minutes in advance");
+        }
 
         var table = await context.Tables.FindAsync(request.TableId);
         if (table == null) throw new InvalidOperationException("Table not found");
