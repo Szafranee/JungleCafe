@@ -7,15 +7,14 @@
     let error = null;
 
     // Props
-    export let onTableSelect = (tableId) => {
-    };
+    export let onTableSelect;
     export let selectedDateTime = null;  // Dodajemy nowy prop
 
     onMount(async () => {
-        fetchAvailableTables();
+        await fetchAvailableTables();
     });
 
-    // Nasłuchuj zmian w selectedDateTime
+    // Re-fetch tables when selectedDateTime changes
     $: if (selectedDateTime) {
         fetchAvailableTables();
     }

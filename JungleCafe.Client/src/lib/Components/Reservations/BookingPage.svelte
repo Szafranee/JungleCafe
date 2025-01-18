@@ -1,5 +1,4 @@
 ﻿<script>
-    import { onMount } from 'svelte';
     import TablesLayout from './TablesLayout.svelte';
     import { authStore } from '../../stores/authStore';
 
@@ -14,6 +13,12 @@
 
     $: dateTimeChanged = selectedDate && selectedTime;
 
+    $: { // Reset error and success messages when form changes
+        if (selectedDate || selectedTime || guestCount || selectedTable || specialRequests) {
+            error = null;
+            success = false;
+        }
+    }
     async function handleSubmit() {
         if (!$authStore.isAuthenticated) {
             window.location.href = '/login';

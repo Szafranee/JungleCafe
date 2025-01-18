@@ -27,25 +27,4 @@ public class TablesService(CafeDbContext context) : ITablesService
             .Distinct()
             .ToListAsync();
     }
-
-    public async Task<IEnumerable<Table>> GetAvailableTables(DateTime? date)
-    {
-        var query = context.Tables.AsQueryable();
-
-        if (date.HasValue)
-        {
-            var reservedTableIds = await context.Reservations
-                .Where(r => r.ReservationDate.Date == date.Value.Date)
-                .Select(r => r.TableId)
-                .Distinct()
-                .ToListAsync();
-
-            query = query.Where(t => !reservedTableIds.Contains(t.Id));
-        }
-
-        return await query
-            .OrderBy(t => t.Zone)
-            .ThenBy(t => t.Number)
-            .ToListAsync();
-    }
 }
