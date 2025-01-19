@@ -20,6 +20,10 @@ public class Reservation
 
     public DateTime CreatedAt { get; set; }
 
+    public bool IsCancelled { get; set; }
+
+    public string? CancellationReason { get; set; }
+
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 
     public virtual Table Table { get; set; } = null!;

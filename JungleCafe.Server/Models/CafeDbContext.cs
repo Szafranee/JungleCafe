@@ -155,6 +155,7 @@ public partial class CafeDbContext : DbContext
 
             entity.HasIndex(e => e.UserId, "IX_Reservations_UserId");
 
+            entity.Property(e => e.CancellationReason).HasMaxLength(200);
             entity.Property(e => e.CreatedAt).HasPrecision(0);
             entity.Property(e => e.Notes).HasMaxLength(500);
             entity.Property(e => e.ReservationDate).HasPrecision(0);
