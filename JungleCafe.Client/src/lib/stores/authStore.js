@@ -20,7 +20,7 @@ const createAuthStore = () => {
             return {
                 token,
                 user,
-                isAuthenticated: !!token && !!user
+                isAuthenticated: !!token && !!user,
             };
         } catch (e) {
             console.error('Error getting stored data:', e);
@@ -55,13 +55,21 @@ const createAuthStore = () => {
 
                 const data = await response.json();
 
-                // Bezpieczne zapisywanie danych
+                let user = {
+                    id: data.id,
+                    name: data.name,
+                    email: data.email,
+                    role: data.role
+                }
+
+                console.log(data);
+
                 if (data && data.token) {
                     localStorage.setItem('token', data.token);
-                    localStorage.setItem('user', JSON.stringify(data.user || {}));
+                    localStorage.setItem('user', JSON.stringify(user || {}));
 
                     set({
-                        user: data.user,
+                        user: user,
                         token: data.token,
                         isAuthenticated: true
                     });
@@ -70,6 +78,57 @@ const createAuthStore = () => {
                 return { success: true };
             } catch (error) {
                 console.error('Login error:', error);
+                return {
+                    success: false,
+                    error: error.message
+                };
+            }
+        },
+
+        // Register
+        register: async (userData) => {
+            try {
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: userData.email,
+                        password: userData.password,
+                        firstName: userData.firstName,
+                        lastName: userData.lastName,
+                        phoneNumber: userData.phoneNumber || null
+                    })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || 'Registration failed');
+                }
+
+                const data = await response.json();
+
+                let user = {
+                    id: data.id,
+                    name: data.name,
+                    email: data.email,
+                    role: data.role
+                }
+
+                // Save token and user data to localStorage
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(user));
+
+                // Update store
+                set({
+                    user: user,
+                    token: data.token,
+                    isAuthenticated: true
+                });
+
+                return { success: true };
+            } catch (error) {
                 return {
                     success: false,
                     error: error.message
