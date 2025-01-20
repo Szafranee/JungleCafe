@@ -101,7 +101,7 @@
         {#if !isExpanded}
             <div
                     class="text-center mt-8"
-                    in:fly={{ y: 20, duration: 400, delay: 600 }}
+                    in:fly={{ y: 20, duration: 100, delay: 100 }}
             >
                 <button
                         on:click={() => isExpanded = true}
@@ -111,6 +111,21 @@
                  active:scale-95"
                 >
                     View All Animals
+                </button>
+            </div>
+            {:else}
+            <div
+                    class="text-center mt-8"
+                    in:fly={{ y: 20, duration: 400, delay: 600 }}
+            >
+                <button
+                        on:click={() => isExpanded = false}
+                        class="bg-jungle-accent text-white px-8 py-3 rounded-full font-medium
+                 hover:bg-jungle-secondary transition-all duration-300 shadow-md
+                 hover:shadow-lg transform hover:scale-105
+                 active:scale-95"
+                >
+                    Show Less
                 </button>
             </div>
         {/if}
