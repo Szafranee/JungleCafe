@@ -9,6 +9,7 @@
     import EventDetails from "./lib/Components/Events/EventDetails.svelte";
     import BookingPage from "./lib/Components/Reservations/BookingPage.svelte";
     import EmployeePanel from "./lib/Components/Employee/EmployeePanel.svelte";
+    import NotFound from "./lib/Components/NotFound/NotFound.svelte";
 
     export let url = "";
 </script>
@@ -30,6 +31,6 @@
         <Route path="/employee" component={EmployeePanel} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
-<!--        <Route default component={NotFound} />  &lt;!&ndash; 404 page &ndash;&gt;-->
+        <Route default component={NotFound} />  <!-- 404 page -->
     </main>
 </Router>
