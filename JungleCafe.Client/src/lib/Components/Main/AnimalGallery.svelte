@@ -15,8 +15,7 @@
             loading = true;
             const response = await fetch('/api/animals');
             if (!response.ok) throw new Error('Failed to fetch animals');
-            let data = await response.json();
-            allAnimals = data.value;
+            allAnimals = await response.json();
         } catch (err) {
             error = err.message;
         } finally {
