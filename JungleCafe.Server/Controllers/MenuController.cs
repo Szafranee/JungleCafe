@@ -1,5 +1,6 @@
 ﻿using JungleCafe.Server.Models;
 using JungleCafe.Server.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JungleCafe.Server.Controllers;
@@ -20,12 +21,15 @@ public class MenuController(IMenuService menuService) : ControllerBase
     {
         var menuItem = await menuService.GetMenuItem(id);
         if (menuItem == null)
+        {
             return NotFound();
+        }
 
         return Ok(menuItem);
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin, Manager, Employee")]
     public async Task<ActionResult<MenuItem>> CreateMenuItem(MenuItem menuItem)
     {
         var created = await menuService.CreateMenuItem(menuItem);
@@ -33,6 +37,7 @@ public class MenuController(IMenuService menuService) : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles = "Admin, Manager, Employee")]
     public async Task<ActionResult<MenuItem>> UpdateMenuItem(int id, MenuItem menuItem)
     {
         if (id != menuItem.Id)
@@ -40,17 +45,22 @@ public class MenuController(IMenuService menuService) : ControllerBase
 
         var updated = await menuService.UpdateMenuItem(id, menuItem);
         if (updated == null)
+        {
             return NotFound();
+        }
 
         return Ok(updated);
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Admin, Manager, Employee")]
     public async Task<IActionResult> DeleteMenuItem(int id)
     {
         var result = await menuService.DeleteMenuItem(id);
         if (!result)
+        {
             return NotFound();
+        }
 
         return NoContent();
     }

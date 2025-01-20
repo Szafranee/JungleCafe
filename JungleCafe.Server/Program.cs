@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Text;
 using JungleCafe.Server.Models;
 using JungleCafe.Server.Services;
@@ -47,6 +48,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"])),
             ValidateIssuer = false,
             ValidateAudience = false,
+            RoleClaimType = ClaimTypes.Role,
             ClockSkew = TimeSpan.Zero
         };
     });

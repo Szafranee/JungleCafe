@@ -12,6 +12,7 @@ namespace JungleCafe.Server.Controllers;
 public class EventsController(IEventService eventService) : ControllerBase
 {
     [HttpGet]
+    [Authorize(Roles = "Admin, Manager, Employee")]
     public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
     {
         var events = await eventService.GetEvents();
@@ -19,6 +20,7 @@ public class EventsController(IEventService eventService) : ControllerBase
     }
 
     [HttpGet("{id:int}")]
+    [Authorize(Roles = "Admin, Manager, Employee, Caretaker")]
     public async Task<ActionResult<Event>> GetEvent(int id)
     {
         var eventItem = await eventService.GetEvent(id);

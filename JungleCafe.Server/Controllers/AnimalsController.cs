@@ -1,6 +1,7 @@
 ﻿using JungleCafe.Server.DTOs;
 using JungleCafe.Server.Models;
 using JungleCafe.Server.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JungleCafe.Server.Controllers;
@@ -29,6 +30,7 @@ public class AnimalsController(IAnimalsService animalsService) : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin, Manager, Employee, Caretaker")]
     public async Task<ActionResult<Animal>> CreateAnimal(Animal animal)
     {
         var created = await animalsService.CreateAnimal(animal);
@@ -36,6 +38,7 @@ public class AnimalsController(IAnimalsService animalsService) : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles = "Admin, Manager, Employee, Caretaker")]
     public async Task<ActionResult<Animal>> UpdateAnimal(int id, [FromBody] AnimalUpdateDto animalDto)
     {
         if (id != animalDto.Id)
@@ -51,6 +54,7 @@ public class AnimalsController(IAnimalsService animalsService) : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Admin, Manager, Employee, Caretaker")]
     public async Task<IActionResult> DeleteAnimal(int id)
     {
         var result = await animalsService.DeleteAnimal(id);

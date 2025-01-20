@@ -1,6 +1,7 @@
 ﻿using JungleCafe.Server.DTOs;
 using JungleCafe.Server.Models;
 using JungleCafe.Server.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JungleCafe.Server.Controllers;
@@ -10,6 +11,7 @@ namespace JungleCafe.Server.Controllers;
 public class UsersController(IUsersService usersService) : ControllerBase
 {
     [HttpGet]
+    [Authorize(Roles = "Admin, Manager")]
     public async Task<ActionResult<IEnumerable<User>>> GetUsers()
     {
         var users = await usersService.GetUsers();
@@ -17,6 +19,7 @@ public class UsersController(IUsersService usersService) : ControllerBase
     }
 
     [HttpGet("{id:int}")]
+    [Authorize(Roles = "Admin, Manager")]
     public async Task<ActionResult<User>> GetUser(int id)
     {
         var user = await usersService.GetUser(id);
@@ -27,6 +30,7 @@ public class UsersController(IUsersService usersService) : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin, Manager")]
     public async Task<ActionResult<User>> CreateUser(User user)
     {
         var created = await usersService.CreateUser(user);
@@ -34,6 +38,7 @@ public class UsersController(IUsersService usersService) : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles = "Admin, Manager")]
     public async Task<ActionResult<User>> UpdateUser(int id, UserUpdateDto userUpdateDto)
     {
         if (id != userUpdateDto.id)
@@ -47,6 +52,7 @@ public class UsersController(IUsersService usersService) : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Admin, Manager")]
     public async Task<IActionResult> DeleteUser(int id)
     {
         var result = await usersService.DeleteUser(id);
@@ -57,6 +63,7 @@ public class UsersController(IUsersService usersService) : ControllerBase
     }
 
     [HttpGet("caretakers")]
+    [Authorize(Roles = "Admin, Manager, Caretaker")]
     public async Task<ActionResult<IEnumerable<User>>> GetCaretakers()
     {
         var caretakers = await usersService.GetCaretakers();
