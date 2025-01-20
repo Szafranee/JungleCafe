@@ -34,6 +34,7 @@ builder.Services.AddScoped<IEventService, EventsService>();
 builder.Services.AddScoped<IReservationsService, ReservationsService>();
 builder.Services.AddScoped<ITablesService, TablesService>();
 builder.Services.AddScoped<IAnimalsService, AnimalsService>();
+builder.Services.AddScoped<IUsersService, UsersService>();
 
 // Add JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

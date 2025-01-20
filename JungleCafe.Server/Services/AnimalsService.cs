@@ -7,21 +7,15 @@ namespace JungleCafe.Server.Services;
 
 public class AnimalsService(CafeDbContext context) : IAnimalsService
 {
-    public async Task<ActionResult<IEnumerable<Animal>>> GetAnimals()
+    public async Task<IEnumerable<Animal>> GetAnimals()
     {
         var animals = await context.Animals.ToListAsync();
         return animals;
     }
 
-    public async Task<ActionResult<Animal>> GetAnimal(int id)
+    public async Task<Animal?> GetAnimal(int id)
     {
-        var animal = await context.Animals.FindAsync(id);
-        if (animal == null)
-        {
-            return new NotFoundResult();
-        }
-
-        return animal;
+        return await context.Animals.FindAsync(id);
     }
 
     public async Task<ActionResult<Animal>> CreateAnimal(Animal animal)
@@ -32,30 +26,14 @@ public class AnimalsService(CafeDbContext context) : IAnimalsService
         return new CreatedAtActionResult("GetAnimal", "Animals", new { id = animal.Id }, animal);
     }
 
-    public async Task<IActionResult> UpdateAnimal(int id, Animal animal)
+    public async Task<Animal?> UpdateAnimal(Animal animal)
     {
-        if (id != animal.Id) return new BadRequestResult();
-
         context.Entry(animal).State = EntityState.Modified;
-
-        try
-        {
-            await context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!AnimalExists(id))
-            {
-                return new NotFoundResult();
-            }
-
-            throw;
-        }
-
-        return new NoContentResult();
+        await context.SaveChangesAsync();
+        return animal;
     }
 
-    public async Task<IActionResult> DeleteAnimal(int id)
+    public async Task<ActionResult> DeleteAnimal(int id)
     {
         var animal = await context.Animals.FindAsync(id);
         if (animal == null)
@@ -69,8 +47,8 @@ public class AnimalsService(CafeDbContext context) : IAnimalsService
         return new NoContentResult();
     }
 
-    private bool AnimalExists(int id)
+    public async Task<bool> AnimalExists(int id)
     {
-        return context.Animals.Any(e => e.Id == id);
+        return await context.Animals.AnyAsync(e => e.Id == id);
     }
 }

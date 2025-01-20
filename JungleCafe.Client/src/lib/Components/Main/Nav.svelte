@@ -66,6 +66,18 @@
                     Events
                 </Link>
 
+                {#if $authStore.isAuthenticated && ($authStore.user.role === 'Admin' || $authStore.user.role === 'Employee' || $authStore.user.role === 'Manager' || $authStore.user.role === 'Caretaker')}
+                    <button
+                            on:click={() => {
+                            window.location.href = '/employee';
+                        }}
+                            class="bg-jungle-primary text-white px-6 py-2 rounded-full font-medium
+                               hover:bg-jungle-secondary transition-colors shadow-sm"
+                    >
+                        Employee Panel
+                    </button>
+                {/if}
+
                 {#if $authStore.isAuthenticated}
                     <button
                             on:click={() => {
@@ -86,6 +98,7 @@
                         Sign In
                     </Link>
                 {/if}
+
             </div>
         </div>
     </div>

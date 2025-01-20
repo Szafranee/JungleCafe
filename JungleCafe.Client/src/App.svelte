@@ -8,6 +8,7 @@
     import Events from "./lib/Components/Events/Events.svelte";
     import EventDetails from "./lib/Components/Events/EventDetails.svelte";
     import BookingPage from "./lib/Components/Reservations/BookingPage.svelte";
+    import EmployeePanel from "./lib/Components/Employee/EmployeePanel.svelte";
 
     export let url = "";
 </script>
@@ -19,8 +20,6 @@
         <Route path="/" component={Home} />
         <Route path="/book" component={BookingPage} />
         <Route path="/menu" component={Menu} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
         <Route path="/events" component={Events} />
         <Route
                 path="/events/:id"
@@ -28,5 +27,9 @@
         >
             <EventDetails eventId={params.id} />
         </Route>
+        <Route path="/employee" component={EmployeePanel} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+<!--        <Route default component={NotFound} />  &lt;!&ndash; 404 page &ndash;&gt;-->
     </main>
 </Router>

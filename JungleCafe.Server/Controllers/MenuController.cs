@@ -12,7 +12,7 @@ public class MenuController(IMenuService menuService) : ControllerBase
     public async Task<ActionResult<IEnumerable<MenuItem>>> GetMenu()
     {
         var menu = await menuService.GetMenu();
-        return Ok(menu);
+        return Ok(menu.Value);
     }
 
     [HttpGet("{id}")]
