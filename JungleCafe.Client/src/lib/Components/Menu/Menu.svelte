@@ -3,7 +3,6 @@
     import { menuStore } from '../../stores/menuStore';
     import MenuItem from './MenuItem.svelte';
 
-
     $: groupedItems = $menuStore.items.reduce((acc, item) => {
         if (!acc[item.category]) {
             acc[item.category] = [];

@@ -77,7 +77,7 @@
         <div class="max-w-7xl mx-auto px-4 py-6">
             <div class="flex justify-between items-center">
                 <p class="text-gray-400 text-sm">
-                    © 2024 Jungle Café. All rights reserved.
+                    © 2025 Jungle Café. All rights reserved.
                 </p>
                 <div class="flex space-x-6 text-sm">
                     <a href="/privacy" class="text-gray-400 hover:text-white transition">
