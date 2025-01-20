@@ -16,7 +16,6 @@
     $: { // Reset error and success messages when form changes
         if (selectedDate || selectedTime || guestCount || selectedTable || specialRequests) {
             error = null;
-            success = false;
         }
     }
     async function handleSubmit() {
