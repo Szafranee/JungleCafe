@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JungleCafe.Server.Services;
 
-public class EventService(CafeDbContext context) : IEventService
+public class EventsService(CafeDbContext context) : IEventService
 {
     public async Task<object> GetEvent(int id)
     {
