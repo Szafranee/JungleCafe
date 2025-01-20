@@ -15,7 +15,7 @@ function createMenuStore() {
                 const response = await fetch('/api/menu');
                 if (!response.ok) throw new Error('Failed to fetch menu items');
                 const data = await response.json();
-                set({ items: data, loading: false, error: null });
+                set({ items: data.value, loading: false, error: null }); //idk what exactly changed, but we need data.value instead of just data like before
             } catch (error) {
                 set({ items: [], loading: false, error: error.message });
             }
