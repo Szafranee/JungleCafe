@@ -10,19 +10,18 @@ namespace JungleCafe.Server.Controllers;
 [Route("api/[controller]")]
 public class EventsController(IEventService eventService) : ControllerBase
 {
-    [HttpGet("{id}")]
-    public async Task<ActionResult<object>> GetEvent(int id)
-    {
-        var eventItem = await eventService.GetEvent(id);
-        if (eventItem == null) return NotFound();
-        return Ok(eventItem);
-    }
-
     [HttpGet]
     public async Task<ActionResult<IEnumerable<object>>> GetEvents()
     {
         var events = await eventService.GetEvents();
         return Ok(events);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<object>> GetEvent(int id)
+    {
+        var eventItem = await eventService.GetEvent(id);
+        return Ok(eventItem);
     }
 
     [HttpPost("register")]

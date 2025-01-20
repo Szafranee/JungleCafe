@@ -7,57 +7,16 @@ namespace JungleCafe.Server.Services;
 
 public class EventsService(CafeDbContext context) : IEventService
 {
-    public async Task<object> GetEvent(int id)
+    public async Task<IEnumerable<Event>> GetEvents()
     {
-        var eventItem = await context.Events
-            .Include(e => e.CreatedByNavigation)
-            .FirstOrDefaultAsync(e => e.Id == id && e.IsPublic);
-
-        if (eventItem == null) return null;
-
-        return new
-        {
-            eventItem.Id,
-            eventItem.Title,
-            eventItem.Description,
-            eventItem.StartDate,
-            eventItem.EndDate,
-            eventItem.MaxParticipants,
-            eventItem.ImageUrl,
-            eventItem.IsPublic,
-            CreatedBy = new
-            {
-                eventItem.CreatedByNavigation.Id,
-                eventItem.CreatedByNavigation.FirstName,
-                eventItem.CreatedByNavigation.LastName
-            }
-        };
+        return await context.Events.ToListAsync();
     }
 
-    public async Task<IEnumerable<object>> GetEvents()
+    public async Task<Event?> GetEvent(int id)
     {
-        return await context.Events
-            .Where(e => e.IsPublic)
-            .OrderBy(e => e.StartDate)
-            .Include(e => e.CreatedByNavigation)
-            .Select(e => new
-            {
-                e.Id,
-                e.Title,
-                e.Description,
-                e.StartDate,
-                e.EndDate,
-                e.MaxParticipants,
-                e.ImageUrl,
-                e.IsPublic,
-                CreatedBy = new
-                {
-                    e.CreatedByNavigation.Id,
-                    e.CreatedByNavigation.FirstName,
-                    e.CreatedByNavigation.LastName
-                }
-            })
-            .ToListAsync();
+        var eventItem = await context.Events.FindAsync(id);
+
+        return eventItem;
     }
 
     public async Task RegisterForEvent(EventRegistrationRequest request, int userId)
