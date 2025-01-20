@@ -21,6 +21,10 @@ public class AuthController(IAuthService authService) : ControllerBase
         {
             return Unauthorized(new { message = "Invalid email or password" });
         }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = ex.Message });
+        }
     }
 
     [HttpPost("register")]
@@ -34,6 +38,10 @@ public class AuthController(IAuthService authService) : ControllerBase
         catch (InvalidOperationException ex)
         {
             return BadRequest(new { message = ex.Message });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = ex.Message });
         }
     }
 }

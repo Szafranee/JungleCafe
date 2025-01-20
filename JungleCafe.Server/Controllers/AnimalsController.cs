@@ -2,7 +2,6 @@
 using JungleCafe.Server.Models;
 using JungleCafe.Server.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace JungleCafe.Server.Controllers;
 
@@ -21,46 +20,45 @@ public class AnimalsController(IAnimalsService animalsService) : ControllerBase
     public async Task<ActionResult<Animal>> GetAnimal(int id)
     {
         var animal = await animalsService.GetAnimal(id);
+        if (animal == null)
+        {
+            return NotFound();
+        }
+
         return Ok(animal);
     }
 
     [HttpPost]
     public async Task<ActionResult<Animal>> CreateAnimal(Animal animal)
     {
-        return await animalsService.CreateAnimal(animal);
+        var created = await animalsService.CreateAnimal(animal);
+        return CreatedAtAction(nameof(GetAnimal), new { id = created.Id }, created);
     }
 
     [HttpPut("{id:int}")]
     public async Task<ActionResult<Animal>> UpdateAnimal(int id, [FromBody] AnimalUpdateDto animalDto)
     {
         if (id != animalDto.Id)
-        {
             return BadRequest("ID mismatch");
-        }
 
-        var animal = await animalsService.GetAnimal(id);
-        if (animal == null)
+        var updated = await animalsService.UpdateAnimal(id, animalDto);
+        if (updated == null)
         {
             return NotFound();
         }
 
-        // Update only the fields from DTO
-        animal.Name = animalDto.Name;
-        animal.Species = animalDto.Species;
-        animal.Category = animalDto.Category;
-        animal.Description = animalDto.Description;
-        animal.ImageUrl = animalDto.ImageUrl;
-        animal.IsActive = animalDto.IsActive;
-        animal.CaretakerId = animalDto.CaretakerId;
-
-        var result = await animalsService.UpdateAnimal(animal);
-        return Ok(result);
+        return Ok(updated);
     }
-
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteAnimal(int id)
     {
-        return await animalsService.DeleteAnimal(id);
+        var result = await animalsService.DeleteAnimal(id);
+        if (!result)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
     }
 }

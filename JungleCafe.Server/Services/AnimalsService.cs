@@ -1,6 +1,6 @@
-﻿using JungleCafe.Server.Models;
+﻿using JungleCafe.Server.DTOs;
+using JungleCafe.Server.Models;
 using JungleCafe.Server.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace JungleCafe.Server.Services;
@@ -9,8 +9,7 @@ public class AnimalsService(CafeDbContext context) : IAnimalsService
 {
     public async Task<IEnumerable<Animal>> GetAnimals()
     {
-        var animals = await context.Animals.ToListAsync();
-        return animals;
+        return await context.Animals.ToListAsync();
     }
 
     public async Task<Animal?> GetAnimal(int id)
@@ -18,37 +17,39 @@ public class AnimalsService(CafeDbContext context) : IAnimalsService
         return await context.Animals.FindAsync(id);
     }
 
-    public async Task<ActionResult<Animal>> CreateAnimal(Animal animal)
+    public async Task<Animal> CreateAnimal(Animal animal)
     {
         context.Animals.Add(animal);
-        await context.SaveChangesAsync();
-
-        return new CreatedAtActionResult("GetAnimal", "Animals", new { id = animal.Id }, animal);
-    }
-
-    public async Task<Animal?> UpdateAnimal(Animal animal)
-    {
-        context.Entry(animal).State = EntityState.Modified;
         await context.SaveChangesAsync();
         return animal;
     }
 
-    public async Task<ActionResult> DeleteAnimal(int id)
+    public async Task<Animal?> UpdateAnimal(int id, AnimalUpdateDto animalDto)
+    {
+        var existingAnimal = await context.Animals.FindAsync(id);
+        if (existingAnimal == null)
+            return null;
+
+        existingAnimal.Name = animalDto.Name;
+        existingAnimal.Species = animalDto.Species;
+        existingAnimal.Category = animalDto.Category;
+        existingAnimal.Description = animalDto.Description;
+        existingAnimal.ImageUrl = animalDto.ImageUrl;
+        existingAnimal.IsActive = animalDto.IsActive;
+        existingAnimal.CaretakerId = animalDto.CaretakerId;
+
+        await context.SaveChangesAsync();
+        return existingAnimal;
+    }
+
+    public async Task<bool> DeleteAnimal(int id)
     {
         var animal = await context.Animals.FindAsync(id);
         if (animal == null)
-        {
-            return new NotFoundResult();
-        }
+            return false;
 
         context.Animals.Remove(animal);
         await context.SaveChangesAsync();
-
-        return new NoContentResult();
-    }
-
-    public async Task<bool> AnimalExists(int id)
-    {
-        return await context.Animals.AnyAsync(e => e.Id == id);
+        return true;
     }
 }

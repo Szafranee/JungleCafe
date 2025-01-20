@@ -22,12 +22,15 @@ public class EventsController(IEventService eventService) : ControllerBase
     public async Task<ActionResult<Event>> GetEvent(int id)
     {
         var eventItem = await eventService.GetEvent(id);
+        if (eventItem == null)
+            return NotFound();
+
         return Ok(eventItem);
     }
 
     [HttpPost("register")]
     [Authorize]
-    public async Task<ActionResult> RegisterForEvent([FromBody] EventRegistrationRequest request)
+    public async Task<IActionResult> RegisterForEvent([FromBody] EventRegistrationRequest request)
     {
         try
         {
@@ -35,9 +38,9 @@ public class EventsController(IEventService eventService) : ControllerBase
             await eventService.RegisterForEvent(request, userId);
             return Ok(new { message = "Registration successful" });
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return StatusCode(500, "Internal server error");
+            return BadRequest(new { message = ex.Message });
         }
     }
 }

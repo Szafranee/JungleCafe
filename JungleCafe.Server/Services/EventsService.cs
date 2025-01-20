@@ -14,19 +14,16 @@ public class EventsService(CafeDbContext context) : IEventService
 
     public async Task<Event?> GetEvent(int id)
     {
-        var eventItem = await context.Events.FindAsync(id);
-
-        return eventItem;
+        return await context.Events.FindAsync(id);
     }
 
     public async Task RegisterForEvent(EventRegistrationRequest request, int userId)
     {
         var eventItem = await context.Events.FindAsync(request.EventId);
+        if (eventItem == null)
+            throw new Exception("Event not found");
 
-        if (eventItem == null) throw new Exception("Event not found");
-
-        // TODO: (maybe)
-        // Check if user is already registered for the event
-        // Check if the event is full
+        // TODO: Implement registration logic
+        // This was just a placeholder in the original code too
     }
 }

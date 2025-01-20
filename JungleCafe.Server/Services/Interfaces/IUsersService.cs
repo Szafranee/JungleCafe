@@ -6,10 +6,10 @@ namespace JungleCafe.Server.Services.Interfaces;
 
 public interface IUsersService
 {
-    Task<ActionResult<IEnumerable<User>>> GetUsers();
-    Task<ActionResult<User>> GetUser(int id);
-    Task<ActionResult<User>> CreateUser(User user);
-    Task<IActionResult> UpdateUser(int id, UserUpdateDto userUpdateDto);
-    Task<IActionResult> DeleteUser(int id);
-    Task<ActionResult<IEnumerable<User>>> GetCaretakers();
+    Task<IEnumerable<User>> GetUsers();
+    Task<User?> GetUser(int id);
+    Task<User> CreateUser(User user);
+    Task<User?> UpdateUser(int id, UserUpdateDto userUpdateDto);
+    Task<bool> DeleteUser(int id);
+    Task<IEnumerable<User>> GetCaretakers();
 }

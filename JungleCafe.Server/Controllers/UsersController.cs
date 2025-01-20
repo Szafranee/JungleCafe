@@ -13,46 +13,53 @@ public class UsersController(IUsersService usersService) : ControllerBase
     public async Task<ActionResult<IEnumerable<User>>> GetUsers()
     {
         var users = await usersService.GetUsers();
-        return Ok(users.Value);
+        return Ok(users);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<User>> GetUser(int id)
     {
         var user = await usersService.GetUser(id);
-
-        if (user.Value == null)
-        {
+        if (user == null)
             return NotFound();
-        }
 
-        return user.Value;
+        return Ok(user);
     }
 
     [HttpPost]
     public async Task<ActionResult<User>> CreateUser(User user)
     {
-        var createdUser = await usersService.CreateUser(user);
-
-        return CreatedAtAction(nameof(GetUser), new { id = createdUser.Value.Id }, createdUser.Value);
+        var created = await usersService.CreateUser(user);
+        return CreatedAtAction(nameof(GetUser), new { id = created.Id }, created);
     }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> UpdateUser(int id, UserUpdateDto user)
+    public async Task<ActionResult<User>> UpdateUser(int id, UserUpdateDto userUpdateDto)
     {
-        return await usersService.UpdateUser(id, user);
+        if (id != userUpdateDto.id)
+            return BadRequest("ID mismatch");
+
+        var updated = await usersService.UpdateUser(id, userUpdateDto);
+        if (updated == null)
+            return NotFound();
+
+        return Ok(updated);
     }
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteUser(int id)
     {
-        return await usersService.DeleteUser(id);
+        var result = await usersService.DeleteUser(id);
+        if (!result)
+            return NotFound();
+
+        return NoContent();
     }
 
     [HttpGet("caretakers")]
     public async Task<ActionResult<IEnumerable<User>>> GetCaretakers()
     {
         var caretakers = await usersService.GetCaretakers();
-        return Ok(caretakers.Value);
+        return Ok(caretakers);
     }
 }

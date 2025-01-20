@@ -5,10 +5,9 @@ namespace JungleCafe.Server.Services.Interfaces;
 
 public interface IMenuService
 {
-    Task<ActionResult<IEnumerable<MenuItem>>> GetMenu();
-    Task<ActionResult<MenuItem>> GetMenuItem(int id);
-    Task<ActionResult<MenuItem>> CreateMenuItem(MenuItem menuItem);
-    Task<IActionResult> UpdateMenuItem(int id, MenuItem menuItem);
-    Task<IActionResult> DeleteMenuItem(int id);
-
+    Task<IEnumerable<MenuItem>> GetMenu();
+    Task<MenuItem?> GetMenuItem(int id);
+    Task<MenuItem> CreateMenuItem(MenuItem menuItem);
+    Task<MenuItem?> UpdateMenuItem(int id, MenuItem menuItem);
+    Task<bool> DeleteMenuItem(int id);
 }
