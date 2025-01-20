@@ -15,7 +15,7 @@ public class MenuController(IMenuService menuService) : ControllerBase
         return Ok(menu);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public async Task<ActionResult<MenuItem>> GetMenuItem(int id)
     {
         var menuItem = await menuService.GetMenuItem(id);
@@ -32,7 +32,7 @@ public class MenuController(IMenuService menuService) : ControllerBase
         return CreatedAtAction(nameof(GetMenuItem), new { id = created.Id }, created);
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("{id:int}")]
     public async Task<ActionResult<MenuItem>> UpdateMenuItem(int id, MenuItem menuItem)
     {
         if (id != menuItem.Id)
@@ -45,7 +45,7 @@ public class MenuController(IMenuService menuService) : ControllerBase
         return Ok(updated);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteMenuItem(int id)
     {
         var result = await menuService.DeleteMenuItem(id);

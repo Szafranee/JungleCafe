@@ -18,7 +18,7 @@ public class EventsController(IEventService eventService) : ControllerBase
         return Ok(events);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public async Task<ActionResult<Event>> GetEvent(int id)
     {
         var eventItem = await eventService.GetEvent(id);
