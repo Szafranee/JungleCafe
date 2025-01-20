@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using JungleCafe.Server.Models;
 using JungleCafe.Server.RequestModels;
 using JungleCafe.Server.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -11,14 +12,14 @@ namespace JungleCafe.Server.Controllers;
 public class EventsController(IEventService eventService) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<object>>> GetEvents()
+    public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
     {
         var events = await eventService.GetEvents();
         return Ok(events);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<object>> GetEvent(int id)
+    public async Task<ActionResult<Event>> GetEvent(int id)
     {
         var eventItem = await eventService.GetEvent(id);
         return Ok(eventItem);

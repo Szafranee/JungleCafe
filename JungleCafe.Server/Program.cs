@@ -30,9 +30,10 @@ builder.Services.AddDbContext<CafeDbContext>(options =>
 // Add services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMenuService, MenuService>();
-builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IEventService, EventsService>();
 builder.Services.AddScoped<IReservationsService, ReservationsService>();
 builder.Services.AddScoped<ITablesService, TablesService>();
+builder.Services.AddScoped<IAnimalsService, AnimalsService>();
 
 // Add JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
