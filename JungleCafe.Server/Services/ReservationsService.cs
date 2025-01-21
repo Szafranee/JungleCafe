@@ -1,22 +1,40 @@
-﻿using JungleCafe.Server.Models;
+﻿using JungleCafe.Server.DTOs;
+using JungleCafe.Server.Models;
 using JungleCafe.Server.RequestModels;
 using JungleCafe.Server.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace JungleCafe.Server.Services;
 
 public class ReservationsService(CafeDbContext context) : IReservationsService
 {
-    public async Task<bool> IsTableAvailable(int tableId, DateTime reservationDate, int duration)
+    public async Task<IEnumerable<ReservationDto>> GetReservations()
     {
-        var reservedTables = await context.Reservations
-            .Where(r => r.TableId == tableId &&
-                        r.ReservationDate >= reservationDate.AddMinutes(-90) &&
-                        r.ReservationDate <= reservationDate.AddMinutes(90) &&
-                        r.Status != "cancelled")
+        return await context.Reservations
+            .Include(r => r.User)
+            .Include(r => r.Table)
+            .Select(r => new ReservationDto
+            {
+                Id = r.Id,
+                UserId = r.UserId,
+                FirstName = r.User.FirstName,
+                LastName = r.User.LastName,
+                Email = r.User.Email,
+                PhoneNumber = r.User.PhoneNumber,
+                TableId = r.TableId,
+                TableNumber = r.Table.Number,
+                ReservationDate = r.ReservationDate,
+                Duration = r.Duration,
+                Status = r.Status,
+                GuestCount = r.GuestsCount,
+                Notes = r.Notes,
+                CreatedAt = r.CreatedAt,
+                CancellationReason = r.CancellationReason
+            })
+            .OrderByDescending(r => r.ReservationDate)
             .ToListAsync();
-
-        return !reservedTables.Any();
     }
 
     public async Task<Reservation> CreateReservation(ReservationRequest request, int userId)
@@ -55,5 +73,65 @@ public class ReservationsService(CafeDbContext context) : IReservationsService
         await context.SaveChangesAsync();
 
         return reservation;
+    }
+
+    public async Task<Reservation> CancelReservation(int reservationId, string reason)
+{
+    var reservation = await context.Reservations.FindAsync(reservationId);
+    if (reservation == null)
+    {
+        throw new InvalidOperationException("Reservation not found");
+    }
+
+    reservation.Status = "cancelled";
+    reservation.CancellationReason = reason;
+
+    await context.SaveChangesAsync();
+
+    return reservation;
+}
+
+    public async Task<Reservation?> UpdateReservation(int reservationId, ReservationUpdateRequest request)
+    {
+        var existingReservation = await context.Reservations.FindAsync(reservationId);
+
+        if (existingReservation == null)
+        {
+            return null;
+        }
+
+        existingReservation.ReservationDate = request.ReservationDate;
+        existingReservation.GuestsCount = request.GuestCount;
+        existingReservation.Notes = request.Notes;
+
+        await context.SaveChangesAsync();
+
+        return existingReservation;
+    }
+
+    public async Task<Reservation> CompleteReservation(int reservationId)
+    {
+        var existingReservation = await context.Reservations.FindAsync(reservationId);
+        if (existingReservation == null)
+        {
+            throw new InvalidOperationException("Reservation not found");
+        }
+
+        existingReservation.Status = "completed";
+        await context.SaveChangesAsync();
+
+        return existingReservation;
+    }
+
+    public async Task<bool> IsTableAvailable(int tableId, DateTime reservationDate, int duration)
+    {
+        var reservedTables = await context.Reservations
+            .Where(r => r.TableId == tableId &&
+                        r.ReservationDate >= reservationDate.AddMinutes(-90) &&
+                        r.ReservationDate <= reservationDate.AddMinutes(90) &&
+                        r.Status != "cancelled")
+            .ToListAsync();
+
+        return !reservedTables.Any();
     }
 }
