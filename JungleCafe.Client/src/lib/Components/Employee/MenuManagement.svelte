@@ -25,6 +25,7 @@
         'Tea',
         'Snacks',
         'Desserts',
+        'Cakes'
     ];
 
     // Fetch menu items on component mount
@@ -169,7 +170,7 @@
                     <div>
                         <h3 class="font-medium">{item.name}</h3>
                         <p class="text-sm text-gray-500">
-                            {item.category} - ${item.price}
+                            {item.category} - {item.price} €
                             {#if !item.isAvailable}
                                 <span class="text-red-500 ml-2">(Unavailable)</span>
                             {/if}
@@ -246,7 +247,7 @@
                 <div class="grid grid-cols-2 gap-6">
                     <!-- Price field -->
                     <div class="bg-white p-4 rounded border border-gray-200">
-                        <label for="price" class="block text-sm font-medium text-gray-700 mb-2">Price ($)</label>
+                        <label for="price" class="block text-sm font-medium text-gray-700 mb-2">Price (€)</label>
                         <input
                                 type="number"
                                 id="price"
