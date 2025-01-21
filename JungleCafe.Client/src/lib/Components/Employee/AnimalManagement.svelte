@@ -202,6 +202,9 @@
                             <p class="text-sm text-gray-500 mt-2">
                                 Caretaker: {getCaretakerName(animal.caretakerId)}
                             </p>
+                            {#if animal.description}
+                                <p class="mt-4 text-gray-600 text-sm">{animal.description}</p>
+                            {/if}
                             {#if !animal.isActive}
                                 <span class="inline-block mt-2 px-2 py-1 text-xs font-medium bg-red-100 text-red-800 rounded">
                                     Inactive
@@ -229,9 +232,6 @@
                                 alt={animal.name}
                                 class="mt-4 w-full h-48 object-cover rounded-lg"
                         />
-                    {/if}
-                    {#if animal.description}
-                        <p class="mt-4 text-gray-600 text-sm">{animal.description}</p>
                     {/if}
                 </div>
             {/each}
