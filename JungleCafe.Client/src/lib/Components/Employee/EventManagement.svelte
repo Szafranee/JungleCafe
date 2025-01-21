@@ -8,6 +8,8 @@
     let loading = false;
     let error = null;
 
+    let errorElement;
+
     // Form state
     let eventForm = {
         title: '',
@@ -76,12 +78,19 @@
                 body: JSON.stringify(eventForm)
             });
 
-            if (!response.ok) throw new Error(`Failed to ${editingEvent ? 'update' : 'create'} event`);
+            if (!response.ok) {
+                const errorMessage = await response.text();
+                throw new Error(errorMessage);
+            }
 
             await fetchEvents();
             resetForm();
         } catch (err) {
             error = err.message;
+            // Scroll to error message
+            setTimeout(() => {
+                errorElement?.scrollIntoView({behavior: 'smooth', block: 'start'});
+            }, 100);
         } finally {
             loading = false;
         }
@@ -143,13 +152,16 @@
                     }, 50);
                 }}
         >
-        Add New Event
+            Add New Event
         </button>
     </div>
 
     <!-- Error display -->
     {#if error}
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <div
+                bind:this={errorElement}
+                class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"
+        >
             {error}
         </div>
     {/if}
@@ -162,23 +174,40 @@
     {:else}
         <div class="mb-8 grid md:grid-cols-2 gap-6">
             {#each events as event}
-                <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="font-medium text-lg text-jungle-brown">{event.title}</h3>
+                <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
+                    <div class="relative">
+                        <!-- Buttons in top-right corner -->
+                        <div class="absolute top-0 right-0 flex gap-4">
+                            <button
+                                    class="text-jungle-accent hover:text-jungle-secondary"
+                                    on:click={() => startEditing(event)}
+                            >
+                                Edit
+                            </button>
+                            <button
+                                    class="text-red-600 hover:text-red-800"
+                                    on:click={() => handleDelete(event.id)}
+                            >
+                                Delete
+                            </button>
+                        </div>
+
+                        <!-- Event content -->
+                        <div class="pt-8">
+                            <h3 class="font-medium text-lg">{event.title}</h3>
                             <p class="text-sm text-gray-500">
                                 {new Date(event.startDate).toLocaleDateString()} -
                                 {new Date(event.endDate).toLocaleDateString()}
                             </p>
                             {#if event.maxParticipants}
-                                <p class="text-sm text-jungle-secondary mt-1">
+                                <p class="text-sm text-jungle-secondary">
                                     Max participants: {event.maxParticipants}
                                 </p>
                             {/if}
-                            <div class="text-sm text-gray-600 mt-2">{event.description}</div>
+                            <p class="text-sm text-gray-600 mt-2">{event.description}</p>
 
                             <!-- Creator info -->
-                            <div class="mt-4">
+                            <div class="border-t border-gray-200 pt-4 mt-4">
                                 <div class="flex flex-col gap-1">
                                     <p class="text-sm text-gray-600">
                                         <span class="font-medium">Created by: {event.creator.firstName} {event.creator.lastName}</span>
@@ -187,29 +216,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex gap-3">
-                            <button
-                                    class="text-jungle-accent hover:text-jungle-secondary transition-colors"
-                                    on:click={() => startEditing(event)}
-                            >
-                                Edit
-                            </button>
-                            <button
-                                    class="text-red-600 hover:text-red-800 transition-colors"
-                                    on:click={() => handleDelete(event.id)}
-                            >
-                                Delete
-                            </button>
-                        </div>
-                    </div>
 
-                    {#if event.imageUrl}
-                        <img
-                                src={event.imageUrl}
-                                alt={event.title}
-                                class="mt-4 w-full h-48 object-cover rounded-lg"
-                        />
-                    {/if}
+                        {#if event.imageUrl}
+                            <img
+                                    src={event.imageUrl}
+                                    alt={event.title}
+                                    class="mt-4 w-full h-48 object-cover rounded"
+                            />
+                        {/if}
+                    </div>
                 </div>
             {/each}
         </div>
@@ -280,6 +295,7 @@
                                 type="datetime-local"
                                 id="endDate"
                                 bind:value={eventForm.endDate}
+                                min={eventForm.startDate}
                                 class="block w-full rounded-md border-gray-300 shadow-sm focus:border-jungle-accent focus:ring-jungle-accent"
                                 required
                         />

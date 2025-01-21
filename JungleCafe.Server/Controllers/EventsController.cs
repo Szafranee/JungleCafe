@@ -53,6 +53,11 @@ public class EventsController(IEventService eventService) : ControllerBase
     {
         try
         {
+            if (eventDto.EndDate <= eventDto.StartDate)
+            {
+                return BadRequest("End date must be later than start date");
+            }
+
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value!);
 
             var eventEntity = new Event
@@ -67,14 +72,12 @@ public class EventsController(IEventService eventService) : ControllerBase
                 CreatedBy = userId
             };
 
-            Console.WriteLine($"Creating event: {eventEntity.Title} by user: {userId}");
-
             var created = await eventService.CreateEvent(eventEntity);
             return CreatedAtAction(nameof(GetEvent), new { id = created.Id }, created);
         }
         catch (Exception ex)
         {
-            return BadRequest(new { message = ex.Message });
+            return BadRequest(ex.Message);
         }
     }
 
