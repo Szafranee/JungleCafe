@@ -20,10 +20,6 @@ public partial class CafeDbContext : DbContext
 
     public virtual DbSet<MenuItem> MenuItems { get; set; }
 
-    public virtual DbSet<Order> Orders { get; set; }
-
-    public virtual DbSet<OrderItem> OrderItems { get; set; }
-
     public virtual DbSet<Reservation> Reservations { get; set; }
 
     public virtual DbSet<Table> Tables { get; set; }
@@ -98,47 +94,6 @@ public partial class CafeDbContext : DbContext
             entity.Property(e => e.ImageUrl).HasMaxLength(255);
             entity.Property(e => e.Name).HasMaxLength(100);
             entity.Property(e => e.Price).HasColumnType("decimal(6, 2)");
-        });
-
-        modelBuilder.Entity<Order>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("Orders_pk");
-
-            entity.HasIndex(e => e.CreatedAt, "IX_Orders_CreatedAt");
-
-            entity.HasIndex(e => e.ReservationId, "IX_Orders_ReservationId");
-
-            entity.HasIndex(e => e.Status, "IX_Orders_Status");
-
-            entity.Property(e => e.CreatedAt).HasPrecision(0);
-            entity.Property(e => e.Status).HasMaxLength(20);
-            entity.Property(e => e.TotalAmount).HasColumnType("decimal(10, 2)");
-
-            entity.HasOne(d => d.Reservation).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.ReservationId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Orders_Reservations");
-        });
-
-        modelBuilder.Entity<OrderItem>(entity =>
-        {
-            entity.HasNoKey();
-
-            entity.HasIndex(e => e.MenuItemId, "IX_OrderItems_MenuItemId");
-
-            entity.HasIndex(e => e.OrderId, "IX_OrderItems_OrderId");
-
-            entity.Property(e => e.Notes).HasMaxLength(255);
-
-            entity.HasOne(d => d.MenuItem).WithMany()
-                .HasForeignKey(d => d.MenuItemId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("OrderItems_MenuItems");
-
-            entity.HasOne(d => d.Order).WithMany()
-                .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("OrderItems_Orders");
         });
 
         modelBuilder.Entity<Reservation>(entity =>
