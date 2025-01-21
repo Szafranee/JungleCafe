@@ -9,7 +9,7 @@ Jungle Cafe is a unique cafe experience where customers can enjoy their favorite
 ### Prerequisites
 - Node.js (v14 or higher)
 - npm (v6 or higher)
-- .NET 6 SDK
+- .NET 8 SDK
 - SQL Server
 
 ### Installation Steps
@@ -166,7 +166,7 @@ The API provides endpoints for managing animals, events, menu items, reservation
   - Svelte Routing
   - Marked
 - Server:
-  - .NET 6
+  - .NET 8
   - Entity Framework Core
   - Microsoft IdentityModel Tokens
   - Swashbuckle (Swagger)
@@ -196,7 +196,7 @@ The project is divided into two main parts: the client and the server.
     - `lib`: Contains reusable components and stores.
     - `assets`: Static assets such as images and styles.
     - `main.js`: Entry point for the client application.
-- `JungleCafe.Server`: Contains the backend code built with .NET 6.
+- `JungleCafe.Server`: Contains the backend code built with .NET 8.
   - `Controllers`: API controllers for handling requests.
   - `Models`: Entity models and DbContext.
   - `Services`: Business logic and service classes.
