@@ -20,6 +20,20 @@
         caretakerId: null
     };
 
+    function resetForm() {
+        editingAnimal = null;
+        animalForm = {
+            id: null,
+            name: '',
+            species: '',
+            category: '',
+            description: '',
+            imageUrl: '',
+            isActive: true,
+            caretakerId: null
+        };
+    }
+
     // Available animal categories
     const categories = [
         'Reptile',
@@ -89,19 +103,6 @@
         }, 50);
     }
 
-    function resetForm() {
-        editingAnimal = null;
-        animalForm = {
-            id: null,
-            name: '',
-            species: '',
-            category: '',
-            description: '',
-            imageUrl: '',
-            isActive: true,
-            caretakerId: null
-        };
-    }
     async function handleSubmit() {
         try {
             loading = true;

@@ -51,7 +51,7 @@
     onMount(fetchEvents);
 </script>
 
-<div class="min-h-screen bg-gray-50 pt-20">
+<div class="min-h-screen bg-gray-50 pt-20 bg-leaves-pattern bg-blend-overlay">
     <div class="max-w-7xl mx-auto px-4 py-8">
         <h1 class="text-4xl font-display text-center mb-12 text-jungle-brown">
             Jungle Café Events

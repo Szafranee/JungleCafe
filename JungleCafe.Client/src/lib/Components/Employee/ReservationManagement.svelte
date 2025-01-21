@@ -74,7 +74,7 @@
     function startEditing(reservation) {
         editingReservation = reservation.id;
         reservationForm = {
-            reservationDate: new Date(reservation.reservationDate).toISOString().slice(0, 16), // Format datetime-local
+            reservationDate: new Date(reservation.reservationDate).toISOString().slice(0, 16),
             guestCount: reservation.guestCount,
             notes: reservation.notes || '',
         };

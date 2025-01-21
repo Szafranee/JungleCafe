@@ -16,8 +16,22 @@
         endDate: '',
         maxParticipants: '',
         imageUrl: '',
-        isPublic: true
+        isPublic: true,
     };
+
+    // Reset form and editing state
+    function resetForm() {
+        editingEvent = null;
+        eventForm = {
+            title: '',
+            description: '',
+            startDate: '',
+            endDate: '',
+            maxParticipants: '',
+            imageUrl: '',
+            isPublic: true,
+        };
+    }
 
     // Load events on component mount
     onMount(async () => {
@@ -95,29 +109,19 @@
         }
     }
 
-    // Reset form and editing state
-    function resetForm() {
-        editingEvent = null;
-        eventForm = {
-            title: '',
-            description: '',
-            startDate: '',
-            endDate: '',
-            maxParticipants: '',
-            imageUrl: '',
-            isPublic: true
-        };
-    }
-
     let formElement;
 
     // Start editing an event
     function startEditing(event) {
         editingEvent = event.id;
         eventForm = {
-            ...event,
-            startDate: event.startDate.split('T')[0],
-            endDate: event.endDate.split('T')[0]
+            title: event.title,
+            description: event.description,
+            startDate: new Date(event.startDate).toISOString().slice(0, 16),
+            endDate: new Date(event.endDate).toISOString().slice(0, 16),
+            maxParticipants: event.maxParticipants,
+            imageUrl: event.imageUrl,
+            isPublic: event.isPublic,
         };
 
         // Scroll to form
@@ -132,9 +136,14 @@
         <h2 class="text-2xl font-semibold">Events</h2>
         <button
                 class="jungle-btn-primary"
-                on:click={resetForm}
+                on:click={() => {
+                    resetForm();
+                    setTimeout(() => {
+                        formElement.scrollIntoView({behavior: 'smooth', block: 'start'});
+                    }, 50);
+                }}
         >
-            Add New Event
+        Add New Event
         </button>
     </div>
 
@@ -153,40 +162,52 @@
     {:else}
         <div class="mb-8 grid md:grid-cols-2 gap-6">
             {#each events as event}
-                <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-                    <div class="flex justify-between">
+                <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                    <div class="flex justify-between items-start">
                         <div>
-                            <h3 class="font-medium text-lg">{event.title}</h3>
+                            <h3 class="font-medium text-lg text-jungle-brown">{event.title}</h3>
                             <p class="text-sm text-gray-500">
                                 {new Date(event.startDate).toLocaleDateString()} -
                                 {new Date(event.endDate).toLocaleDateString()}
                             </p>
                             {#if event.maxParticipants}
-                                <p class="text-sm text-jungle-secondary">
+                                <p class="text-sm text-jungle-secondary mt-1">
                                     Max participants: {event.maxParticipants}
                                 </p>
                             {/if}
+                            <div class="text-sm text-gray-600 mt-2">{event.description}</div>
+
+                            <!-- Creator info -->
+                            <div class="mt-4">
+                                <div class="flex flex-col gap-1">
+                                    <p class="text-sm text-gray-600">
+                                        <span class="font-medium">Created by: {event.creator.firstName} {event.creator.lastName}</span>
+                                    </p>
+                                    <p class="text-sm text-gray-400">{event.creator.email}</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex gap-2">
+                        <div class="flex gap-3">
                             <button
-                                    class="text-jungle-accent hover:text-jungle-secondary"
+                                    class="text-jungle-accent hover:text-jungle-secondary transition-colors"
                                     on:click={() => startEditing(event)}
                             >
                                 Edit
                             </button>
                             <button
-                                    class="text-red-600 hover:text-red-800"
+                                    class="text-red-600 hover:text-red-800 transition-colors"
                                     on:click={() => handleDelete(event.id)}
                             >
                                 Delete
                             </button>
                         </div>
                     </div>
+
                     {#if event.imageUrl}
                         <img
                                 src={event.imageUrl}
                                 alt={event.title}
-                                class="mt-4 w-full h-48 object-cover rounded"
+                                class="mt-4 w-full h-48 object-cover rounded-lg"
                         />
                     {/if}
                 </div>
@@ -244,7 +265,7 @@
                     <div class="bg-white p-4 rounded border border-gray-200">
                         <label for="startDate" class="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
                         <input
-                                type="date"
+                                type="datetime-local"
                                 id="startDate"
                                 bind:value={eventForm.startDate}
                                 class="block w-full rounded-md border-gray-300 shadow-sm focus:border-jungle-accent focus:ring-jungle-accent"
@@ -256,7 +277,7 @@
                     <div class="bg-white p-4 rounded border border-gray-200">
                         <label for="endDate" class="block text-sm font-medium text-gray-700 mb-2">End Date</label>
                         <input
-                                type="date"
+                                type="datetime-local"
                                 id="endDate"
                                 bind:value={eventForm.endDate}
                                 class="block w-full rounded-md border-gray-300 shadow-sm focus:border-jungle-accent focus:ring-jungle-accent"

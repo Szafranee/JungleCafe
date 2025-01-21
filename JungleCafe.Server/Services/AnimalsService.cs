@@ -28,7 +28,9 @@ public class AnimalsService(CafeDbContext context) : IAnimalsService
     {
         var existingAnimal = await context.Animals.FindAsync(id);
         if (existingAnimal == null)
+        {
             return null;
+        }
 
         existingAnimal.Name = animalDto.Name;
         existingAnimal.Species = animalDto.Species;
