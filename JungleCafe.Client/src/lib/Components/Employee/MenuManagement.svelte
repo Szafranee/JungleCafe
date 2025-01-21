@@ -1,6 +1,6 @@
 ﻿<script>
-    import { onMount } from 'svelte';
-    import { authStore } from '../../stores/authStore';
+    import {onMount} from 'svelte';
+    import {authStore} from '../../stores/authStore';
 
     // State for menu items list and form
     let menuItems = [];
@@ -15,6 +15,7 @@
         description: '',
         price: '',
         allergensInfo: '',
+        imageUrl: '',
         isAvailable: true
     };
 
@@ -115,8 +116,14 @@
             description: '',
             price: '',
             allergensInfo: '',
+            imageUrl: '',
             isAvailable: true
         };
+
+        // Scroll to top of the form
+        setTimeout(() => {
+            formElement.scrollIntoView({behavior: 'smooth', block: 'start'});
+        }, 100);
     }
 
     // Start editing a menu item
@@ -124,10 +131,10 @@
 
     function startEditing(item) {
         editingMenuItem = item.id;
-        menuForm = { ...item };
+        menuForm = {...item};
 
         setTimeout(() => {
-            formElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            formElement.scrollIntoView({behavior: 'smooth', block: 'start'});
         }, 100);
     }
 </script>
@@ -283,7 +290,8 @@
 
                 <!-- Allergens field -->
                 <div class="bg-white p-4 rounded border border-gray-200">
-                    <label for="allergensInfo" class="block text-sm font-medium text-gray-700 mb-2">Allergens Information</label>
+                    <label for="allergensInfo" class="block text-sm font-medium text-gray-700 mb-2">Allergens
+                        Information</label>
                     <input
                             type="text"
                             id="allergensInfo"
@@ -292,6 +300,17 @@
                             placeholder="e.g., Contains nuts, dairy, gluten..."
                     />
                 </div>
+
+                <!-- Image URL field-->
+                <div class="bg-white p-4 rounded border border-gray-200">
+                    <label for="imageUrl" class="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
+                    <input
+                            type="url"
+                            id="imageUrl"
+                            bind:value={menuForm.imageUrl}
+                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-jungle-accent focus:ring-jungle-accent"
+                            placeholder="Enter image URL..."
+                    />
             </div>
         </div>
 
