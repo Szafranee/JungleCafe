@@ -42,7 +42,9 @@ public class AnimalsController(IAnimalsService animalsService) : ControllerBase
     public async Task<ActionResult<Animal>> UpdateAnimal(int id, [FromBody] AnimalUpdateDto animalDto)
     {
         if (id != animalDto.Id)
+        {
             return BadRequest("ID mismatch");
+        }
 
         var updated = await animalsService.UpdateAnimal(id, animalDto);
         if (updated == null)

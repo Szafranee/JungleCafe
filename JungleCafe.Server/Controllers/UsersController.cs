@@ -24,7 +24,9 @@ public class UsersController(IUsersService usersService) : ControllerBase
     {
         var user = await usersService.GetUser(id);
         if (user == null)
+        {
             return NotFound();
+        }
 
         return Ok(user);
     }
@@ -42,11 +44,15 @@ public class UsersController(IUsersService usersService) : ControllerBase
     public async Task<ActionResult<User>> UpdateUser(int id, UserUpdateDto userUpdateDto)
     {
         if (id != userUpdateDto.id)
+        {
             return BadRequest("ID mismatch");
+        }
 
         var updated = await usersService.UpdateUser(id, userUpdateDto);
         if (updated == null)
+        {
             return NotFound();
+        }
 
         return Ok(updated);
     }
@@ -57,7 +63,9 @@ public class UsersController(IUsersService usersService) : ControllerBase
     {
         var result = await usersService.DeleteUser(id);
         if (!result)
+        {
             return NotFound();
+        }
 
         return NoContent();
     }

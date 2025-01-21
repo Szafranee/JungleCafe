@@ -28,7 +28,9 @@ public class UsersService(CafeDbContext context) : IUsersService
     {
         var existingUser = await context.Users.FindAsync(id);
         if (existingUser == null)
+        {
             return null;
+        }
 
         existingUser.FirstName = userUpdateDto.FirstName;
         existingUser.LastName = userUpdateDto.LastName;

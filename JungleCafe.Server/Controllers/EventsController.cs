@@ -25,7 +25,9 @@ public class EventsController(IEventService eventService) : ControllerBase
     {
         var eventItem = await eventService.GetEvent(id);
         if (eventItem == null)
+        {
             return NotFound();
+        }
 
         return Ok(eventItem);
     }

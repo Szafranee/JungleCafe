@@ -41,7 +41,9 @@ public class MenuController(IMenuService menuService) : ControllerBase
     public async Task<ActionResult<MenuItem>> UpdateMenuItem(int id, MenuItem menuItem)
     {
         if (id != menuItem.Id)
+        {
             return BadRequest();
+        }
 
         var updated = await menuService.UpdateMenuItem(id, menuItem);
         if (updated == null)
