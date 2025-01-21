@@ -35,7 +35,7 @@
                     <li><a href="/menu" class="text-gray-300 hover:text-white transition">Menu</a></li>
                     <li><a href="/book" class="text-gray-300 hover:text-white transition">Book a Table</a></li>
                     <li><a href="/events" class="text-gray-300 hover:text-white transition">Events</a></li>
-                    <li><a href="/about" class="text-gray-300 hover:text-white transition">About Us</a></li>
+                    <li><a href="/" class="text-gray-300 hover:text-white transition">About Us</a></li>
                 </ul>
             </div>
 
@@ -80,10 +80,10 @@
                     © 2025 Jungle Café. All rights reserved.
                 </p>
                 <div class="flex space-x-6 text-sm">
-                    <a href="/privacy" class="text-gray-400 hover:text-white transition">
+                    <a href="/" class="text-gray-400 hover:text-white transition">
                         Privacy Policy
                     </a>
-                    <a href="/terms" class="text-gray-400 hover:text-white transition">
+                    <a href="/" class="text-gray-400 hover:text-white transition">
                         Terms of Service
                     </a>
                 </div>
