@@ -66,6 +66,15 @@
                     Events
                 </Link>
 
+                {#if $authStore.isAuthenticated}
+                    <Link
+                            to="/my-reservations"
+                            class="text-jungle-brown hover:text-jungle-primary transition-colors font-medium"
+                    >
+                        My Reservations
+                    </Link>
+                {/if}
+
                 {#if $authStore.isAuthenticated && ($authStore.user.role === 'Admin' || $authStore.user.role === 'Employee' || $authStore.user.role === 'Manager' || $authStore.user.role === 'Caretaker')}
                     <button
                             on:click={() => {

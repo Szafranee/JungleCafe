@@ -27,8 +27,24 @@ public class ReservationsController(IReservationsService reservationsService) : 
         }
     }
 
+    [HttpGet("user")]
+    [Authorize]
+    public async Task<ActionResult<IEnumerable<ReservationDto>>> GetUserReservations()
+    {
+        try
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value!);
+            var reservations = await reservationsService.GetUserReservations(userId);
+            return Ok(reservations);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "Internal server error" });
+        }
+    }
+
     [HttpPost]
-    [Authorize(Roles = "Admin, Manager, Employee")]
+    [Authorize]
     public async Task<ActionResult> CreateReservation(ReservationRequest request)
     {
         try
@@ -58,14 +74,25 @@ public class ReservationsController(IReservationsService reservationsService) : 
         }
     }
 
-    // cancel reservation
     [HttpPost("{id:int}/cancel")]
-    [Authorize(Roles = "Admin, Manager, Employee")]
+    [Authorize]
     public async Task<ActionResult> CancelReservation(int id, [FromBody] ReservationCancellationRequest request)
     {
-        Console.WriteLine(request);
         try
         {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value!);
+            var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
+
+            // Check if user has permission to cancel this reservation
+            if (!User.IsInRole("Admin") && !User.IsInRole("Manager") && !User.IsInRole("Employee"))
+            {
+                var canModify = await reservationsService.CanUserModifyReservation(userId, id);
+                if (!canModify)
+                {
+                    return Forbid();
+                }
+            }
+
             await reservationsService.CancelReservation(id, request.Reason);
             return Ok(new { message = "Reservation cancelled successfully" });
         }
@@ -79,7 +106,6 @@ public class ReservationsController(IReservationsService reservationsService) : 
         }
     }
 
-    // update reservation
     [HttpPut("{id:int}")]
     [Authorize(Roles = "Admin, Manager, Employee")]
     public async Task<ActionResult> UpdateReservation(int id, ReservationUpdateRequest request)
@@ -104,7 +130,6 @@ public class ReservationsController(IReservationsService reservationsService) : 
         }
     }
 
-    // complete reservation
     [HttpPost("{id:int}/complete")]
     [Authorize(Roles = "Admin, Manager, Employee")]
     public async Task<ActionResult> CompleteReservation(int id)
