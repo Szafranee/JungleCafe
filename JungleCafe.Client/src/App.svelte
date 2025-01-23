@@ -10,6 +10,7 @@
     import BookingPage from "./lib/Components/Reservations/BookingPage.svelte";
     import EmployeePanel from "./lib/Components/Employee/EmployeePanel.svelte";
     import NotFound from "./lib/Components/NotFound/NotFound.svelte";
+    import UserReservations from "./lib/Components/UserReservations/UserReservations.svelte";
 
     export let url = "";
 </script>
@@ -28,6 +29,7 @@
         >
             <EventDetails eventId={params.id} />
         </Route>
+        <Route path="my-reservations" component={UserReservations} />
         <Route path="/employee" component={EmployeePanel} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />

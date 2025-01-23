@@ -399,7 +399,13 @@
                     {#each filteredReservations as reservation}
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {new Date(reservation.reservationDate).toLocaleString('en-GB')}
+                                {new Date(reservation.reservationDate).toLocaleString('en-GB', {
+                                    year: 'numeric',
+                                    month: '2-digit',
+                                    day: '2-digit',
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                })}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                 {reservation.tableNumber}

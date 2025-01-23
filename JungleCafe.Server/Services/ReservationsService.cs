@@ -37,6 +37,34 @@ public class ReservationsService(CafeDbContext context) : IReservationsService
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<ReservationDto>> GetUserReservations(int userId)
+    {
+        return await context.Reservations
+            .Include(r => r.User)
+            .Include(r => r.Table)
+            .Where(r => r.UserId == userId)
+            .Select(r => new ReservationDto
+            {
+                Id = r.Id,
+                UserId = r.UserId,
+                FirstName = r.User.FirstName,
+                LastName = r.User.LastName,
+                Email = r.User.Email,
+                PhoneNumber = r.User.PhoneNumber,
+                TableId = r.TableId,
+                TableNumber = r.Table.Number,
+                ReservationDate = r.ReservationDate,
+                Duration = r.Duration,
+                Status = r.Status,
+                GuestCount = r.GuestsCount,
+                Notes = r.Notes,
+                CreatedAt = r.CreatedAt,
+                CancellationReason = r.CancellationReason
+            })
+            .OrderByDescending(r => r.ReservationDate)
+            .ToListAsync();
+    }
+
     public async Task<Reservation> CreateReservation(ReservationRequest request, int userId)
     {
         var isAvailable = await IsTableAvailable(request.TableId, request.ReservationDate, request.Duration);
@@ -133,5 +161,17 @@ public class ReservationsService(CafeDbContext context) : IReservationsService
             .ToListAsync();
 
         return !reservedTables.Any();
+    }
+
+    public async Task<bool> CanUserModifyReservation(int userId, int reservationId)
+    {
+        var reservation = await context.Reservations
+            .FirstOrDefaultAsync(r => r.Id == reservationId);
+
+        if (reservation == null)
+            return false;
+
+        // Check if the reservation belongs to the user
+        return reservation.UserId == userId;
     }
 }
