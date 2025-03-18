@@ -1,8 +1,113 @@
-# jungle-cafe-website
-Final project for TIN (Internet Technologies) class at PJATK (V sem)
+# Jungle Cafe Website
+
+<img src="docs/images/jungle_cafe_logo.png" alt="Jungle Cafe Logo" width="150"/>
+
+Final project for TIN (Internet Technologies) class at PJATK (V semester)
 
 ## Project Description
-Jungle Cafe is a unique cafe experience where customers can enjoy their favorite beverages and meals while being surrounded by exotic animals. The project aims to provide an online platform for customers to view the menu, book tables, and stay updated on upcoming events. The main features of the project include user authentication, table reservations, event management, and an interactive menu.
+
+Jungle Cafe is a unique cafe experience where customers can enjoy their favorite beverages and meals while being surrounded by exotic animals. This web application provides an online platform for customers to view the menu, book tables, and stay updated on upcoming events.
+
+### Key Features
+
+#### 🌿 Immersive User Experience
+The website offers a seamless, jungle-themed interface that captures the unique atmosphere of the cafe.
+
+![Homepage Screenshot](docs/images/homepage-screenshot-placeholder.png)
+
+#### 🔐 User Authentication and Authorization
+- Secure registration and login system
+- Role-based access control (Customer, Employee, Admin)
+- Profile management with personal information and preferences
+- Password reset functionality
+- JWT-based authentication for API endpoints
+
+<img src="docs/images/login_page.png" alt="Login page" width="640"/>
+<img src="docs/images/register_page.png" alt="Login page" width="640"/>
+
+#### 🍽️ Interactive Menu
+- Categorized display of food and beverages
+- Search and filter options for dietary preferences
+- Detailed item descriptions with ingredients and allergen information
+- Visual gallery of menu items
+- Special promotions and deals section
+
+<img src="docs/images/menu_page.png" alt="Menu page" width="640"/>
+
+#### 🦁 Animal Gallery
+- Showcases the exotic animals residing in the cafe
+- Detailed information about each animal's species, habitat, and fun facts
+- Interactive elements allowing visitors to learn more about conservation efforts
+- Regular updates when new animals join the cafe family
+
+![Animal Gallery Screenshot](docs/images/animal-gallery-screenshot-placeholder.png)
+
+#### 🗓️ Table Reservation System
+- Interactive calendar showing available slots
+- Table selection based on preferences (location, size, proximity to animals)
+- Automatic email confirmation of bookings
+- Ability to modify or cancel existing reservations
+- Special requests field for custom arrangements
+
+![Reservation System Screenshot](docs/images/reservation-screenshot-placeholder.png)
+
+#### 📅 Event Management
+- Calendar of upcoming events at the cafe
+- Event registration and ticketing
+- Detailed event information with schedule and highlights
+- Automatic reminders for registered attendees
+- Past event gallery with photos and highlights
+
+![Events Calendar Screenshot](docs/images/events-screenshot-placeholder.png)
+
+#### 👨💼 Employee Panel
+- Dashboard for staff to manage daily operations
+- Reservation management interface
+- Menu item availability updates
+- Animal care schedule and records
+- Event planning and coordination tools
+
+![Employee Panel Screenshot](docs/images/employee-panel-screenshot-placeholder.png)
+
+#### 📱 Responsive Design
+- Fully responsive interface that works seamlessly across devices (desktop, tablet, mobile)
+- Optimized layouts for different screen sizes
+- Touch-friendly interface elements
+- Offline capabilities for viewing basic information
+
+![Responsive Design Screenshot](docs/images/responsive-design-screenshot-placeholder.png)
+
+## Technical Implementation
+
+### Frontend Architecture
+The frontend is built with Svelte and uses a component-based architecture for maximum reusability and maintainability:
+
+- **Component Library**: Custom UI components developed for consistent look and feel
+- **State Management**: Leverages Svelte stores for reactive state management
+- **Routing**: Client-side routing with Svelte Routing
+- **Styling**: Utilizes Tailwind CSS for utility-first styling approach
+- **Responsive Design**: Mobile-first approach ensuring compatibility across devices
+- **API Integration**: Axios for REST API communication with backend services
+
+### Backend Architecture
+The backend follows a clean architecture approach with separation of concerns:
+
+- **API Layer**: RESTful controllers handling HTTP requests and responses
+- **Service Layer**: Business logic implementation
+- **Data Access Layer**: Entity Framework Core for database operations
+- **Authentication**: JWT-based authentication and authorization
+- **Validation**: Request model validation using data annotations and FluentValidation
+- **Documentation**: Swagger UI for API documentation and testing
+
+### Database Schema
+The application uses SQL Server with the following key entities:
+
+- **Users**: Stores user accounts with role-based access control
+- **Animals**: Information about the exotic animals in the cafe
+- **Menu Items**: Food and beverages available for order
+- **Tables**: Cafe seating arrangements with capacity information
+- **Reservations**: Customer table bookings with date, time, and guest count
+- **Events**: Upcoming special events at the cafe
 
 ## Setup Instructions
 
@@ -52,128 +157,117 @@ Jungle Cafe is a unique cafe experience where customers can enjoy their favorite
      npm run dev
      ```
 
-## Usage Guidelines
-- Navigate to the homepage to view the welcome section and animal gallery.
-- Use the navigation bar to access different sections such as booking a table, viewing the menu, and checking out upcoming events.
-- Register or log in to make reservations and access the employee panel (if you have the appropriate role).
+7. Access the application:
+   - Frontend: http://localhost:5173
+   - API: http://localhost:5000
+   - Swagger UI: http://localhost:5000/swagger
 
 ## API Documentation
-The API provides endpoints for managing animals, events, menu items, reservations, tables, and users. Below are some of the key endpoints:
 
-- `GET /api/animals` - Retrieve a list of all animals.
-  - **Request Format**: None
-  - **Response Format**: JSON array of animal objects
-  - **Authentication**: None
-  - **Example Usage**:
-    ```bash
-    curl -X GET https://your-api-url/api/animals
-    ```
+The API provides endpoints for managing all aspects of the Jungle Cafe experience. Below are the key API categories:
 
-- `POST /api/animals` - Create a new animal (requires authentication).
-  - **Request Format**: JSON object with animal details
-  - **Response Format**: JSON object of the created animal
-  - **Authentication**: Bearer token required
-  - **Example Usage**:
-    ```bash
-    curl -X POST https://your-api-url/api/animals -H "Authorization: Bearer <token>" -H "Content-Type: application/json" -d '{"name": "Lion", "species": "Panthera leo", "category": "Mammal", "imageUrl": "https://example.com/lion.jpg"}'
-    ```
+### 🦁 Animals API
 
-- `GET /api/events` - Retrieve a list of all events.
-  - **Request Format**: None
-  - **Response Format**: JSON array of event objects
-  - **Authentication**: None
-  - **Example Usage**:
-    ```bash
-    curl -X GET https://your-api-url/api/events
-    ```
+| Endpoint | Method | Description | Authentication |
+|----------|--------|-------------|----------------|
+| `/api/animals` | GET | Retrieve all animals | None |
+| `/api/animals/{id}` | GET | Get animal by ID | None |
+| `/api/animals` | POST | Create new animal | Required (Admin) |
+| `/api/animals/{id}` | PUT | Update animal | Required (Admin) |
+| `/api/animals/{id}` | DELETE | Remove animal | Required (Admin) |
 
-- `POST /api/events` - Create a new event (requires authentication).
-  - **Request Format**: JSON object with event details
-  - **Response Format**: JSON object of the created event
-  - **Authentication**: Bearer token required
-  - **Example Usage**:
-    ```bash
-    curl -X POST https://your-api-url/api/events -H "Authorization: Bearer <token>" -H "Content-Type: application/json" -d '{"title": "Safari Night", "description": "An exciting night safari event", "startDate": "2023-12-01T18:00:00", "endDate": "2023-12-01T21:00:00", "isPublic": true}'
-    ```
+Example request for creating an animal:
+```bash
+curl -X POST https://your-api-url/api/animals \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Lion", "species": "Panthera leo", "category": "Mammal", "imageUrl": "https://example.com/lion.jpg"}'
+```
 
-- `GET /api/menu` - Retrieve the menu.
-  - **Request Format**: None
-  - **Response Format**: JSON array of menu item objects
-  - **Authentication**: None
-  - **Example Usage**:
-    ```bash
-    curl -X GET https://your-api-url/api/menu
-    ```
+### 📅 Events API
 
-- `POST /api/menu` - Create a new menu item (requires authentication).
-  - **Request Format**: JSON object with menu item details
-  - **Response Format**: JSON object of the created menu item
-  - **Authentication**: Bearer token required
-  - **Example Usage**:
-    ```bash
-    curl -X POST https://your-api-url/api/menu -H "Authorization: Bearer <token>" -H "Content-Type: application/json" -d '{"name": "Espresso", "category": "Beverage", "price": 2.5, "isAvailable": true}'
-    ```
+| Endpoint | Method | Description | Authentication |
+|----------|--------|-------------|----------------|
+| `/api/events` | GET | Retrieve all events | None |
+| `/api/events/{id}` | GET | Get event by ID | None |
+| `/api/events` | POST | Create new event | Required (Admin) |
+| `/api/events/{id}` | PUT | Update event | Required (Admin) |
+| `/api/events/{id}` | DELETE | Remove event | Required (Admin) |
+| `/api/events/{id}/register` | POST | Register for event | Required (User) |
 
-- `GET /api/reservations` - Retrieve a list of all reservations (requires authentication).
-  - **Request Format**: None
-  - **Response Format**: JSON array of reservation objects
-  - **Authentication**: Bearer token required
-  - **Example Usage**:
-    ```bash
-    curl -X GET https://your-api-url/api/reservations -H "Authorization: Bearer <token>"
-    ```
+### 🍽️ Menu API
 
-- `POST /api/reservations` - Create a new reservation (requires authentication).
-  - **Request Format**: JSON object with reservation details
-  - **Response Format**: JSON object of the created reservation
-  - **Authentication**: Bearer token required
-  - **Example Usage**:
-    ```bash
-    curl -X POST https://your-api-url/api/reservations -H "Authorization: Bearer <token>" -H "Content-Type: application/json" -d '{"tableId": 1, "reservationDate": "2023-12-01T19:00:00", "guestCount": 4, "specialRequests": "Window seat"}'
-    ```
+| Endpoint | Method | Description | Authentication |
+|----------|--------|-------------|----------------|
+| `/api/menu` | GET | Retrieve all menu items | None |
+| `/api/menu/categories` | GET | Get menu categories | None |
+| `/api/menu/{id}` | GET | Get menu item by ID | None |
+| `/api/menu` | POST | Create menu item | Required (Admin) |
+| `/api/menu/{id}` | PUT | Update menu item | Required (Admin) |
+| `/api/menu/{id}` | DELETE | Remove menu item | Required (Admin) |
 
-- `GET /api/tables` - Retrieve a list of all tables.
-  - **Request Format**: None
-  - **Response Format**: JSON array of table objects
-  - **Authentication**: None
-  - **Example Usage**:
-    ```bash
-    curl -X GET https://your-api-url/api/tables
-    ```
+### 🗓️ Reservations API
 
-- `GET /api/users` - Retrieve a list of all users (requires authentication).
-  - **Request Format**: None
-  - **Response Format**: JSON array of user objects
-  - **Authentication**: Bearer token required
-  - **Example Usage**:
-    ```bash
-    curl -X GET https://your-api-url/api/users -H "Authorization: Bearer <token>"
-    ```
+| Endpoint | Method | Description | Authentication |
+|----------|--------|-------------|----------------|
+| `/api/reservations` | GET | Get user reservations | Required (User) |
+| `/api/reservations/all` | GET | Get all reservations | Required (Admin) |
+| `/api/reservations/{id}` | GET | Get reservation by ID | Required (User/Admin) |
+| `/api/reservations` | POST | Create reservation | Required (User) |
+| `/api/reservations/{id}` | PUT | Update reservation | Required (User) |
+| `/api/reservations/{id}` | DELETE | Cancel reservation | Required (User) |
 
-## Features
-- User authentication and authorization
-- Table reservations
-- Event management
-- Interactive menu
-- Animal gallery
-- Employee panel
+### 🪑 Tables API
+
+| Endpoint | Method | Description | Authentication |
+|----------|--------|-------------|----------------|
+| `/api/tables` | GET | Get all tables | None |
+| `/api/tables/available` | GET | Get available tables | None |
+| `/api/tables/{id}` | GET | Get table by ID | None |
+| `/api/tables` | POST | Create table | Required (Admin) |
+| `/api/tables/{id}` | PUT | Update table | Required (Admin) |
+| `/api/tables/{id}` | DELETE | Remove table | Required (Admin) |
+
+### 👤 Users API
+
+| Endpoint | Method | Description | Authentication |
+|----------|--------|-------------|----------------|
+| `/api/users` | GET | Get all users | Required (Admin) |
+| `/api/users/{id}` | GET | Get user by ID | Required (Self/Admin) |
+| `/api/users/{id}` | PUT | Update user | Required (Self/Admin) |
+| `/api/users/{id}` | DELETE | Delete user | Required (Self/Admin) |
+
+### 🔐 Authentication API
+
+| Endpoint | Method | Description | Authentication |
+|----------|--------|-------------|----------------|
+| `/api/auth/register` | POST | Register new user | None |
+| `/api/auth/login` | POST | Login | None |
+| `/api/auth/refresh` | POST | Refresh token | None |
 
 ## Dependencies
-- Client:
-  - Svelte
-  - Vite
-  - Tailwind CSS
-  - Svelte Routing
-  - Marked
-- Server:
-  - .NET 8
-  - Entity Framework Core
-  - Microsoft IdentityModel Tokens
-  - Swashbuckle (Swagger)
+
+### Client Dependencies
+- **Svelte**: Frontend framework
+- **Vite**: Build tool and development server
+- **Tailwind CSS**: Utility-first CSS framework
+- **Svelte Routing**: Client-side routing
+- **Marked**: Markdown parsing library
+- **Axios**: HTTP client
+- **Day.js**: Date manipulation library
+- **Svelte-Toasts**: Notification system
+
+### Server Dependencies
+- **.NET 8**: Web application framework
+- **Entity Framework Core**: ORM for database operations
+- **Microsoft IdentityModel Tokens**: JWT authentication
+- **Swashbuckle**: Swagger UI implementation
+- **AutoMapper**: Object-to-object mapping
+- **FluentValidation**: Request validation
 
 ## Deployment Instructions
-To deploy the project, follow these steps:
 
+### Azure Deployment
 1. Build the client:
    ```bash
    cd JungleCafe.Client
@@ -186,26 +280,95 @@ To deploy the project, follow these steps:
    dotnet publish -c Release -o ./publish
    ```
 
-3. Deploy the client and server to your preferred hosting environment (e.g., Azure, AWS, or a VPS).
+3. Deploy to Azure App Service:
+   - Create an Azure App Service
+   - Set up deployment from GitHub or upload manually
+   - Configure environment variables for database connection
+
+### Docker Deployment
+1. Build the Docker images:
+   ```bash
+   docker-compose build
+   ```
+
+2. Run the containers:
+   ```bash
+   docker-compose up -d
+   ```
+
+## Contributing
+
+We welcome contributions to the Jungle Cafe Website! Please follow these steps:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## Project Architecture and Directory Structure
-The project is divided into two main parts: the client and the server.
 
-- `JungleCafe.Client`: Contains the frontend code built with Svelte.
-  - `src`: Source code for the client.
-    - `lib`: Contains reusable components and stores.
-    - `assets`: Static assets such as images and styles.
-    - `main.js`: Entry point for the client application.
-- `JungleCafe.Server`: Contains the backend code built with .NET 8.
-  - `Controllers`: API controllers for handling requests.
-  - `Models`: Entity models and DbContext.
-  - `Services`: Business logic and service classes.
-  - `DTOs`: Data transfer objects.
-  - `RequestModels`: Models for handling API requests.
-  - `ResponseModels`: Models for handling API responses.
+The project follows a clean separation between frontend and backend:
 
-## Related Resources
-- [Svelte Documentation](https://svelte.dev/docs)
-- [Vite Documentation](https://vitejs.dev/guide/)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [ASP.NET Core Documentation](https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-6.0)
+### Frontend Structure (`JungleCafe.Client`)
+```
+JungleCafe.Client/
+├── public/              # Static files
+│   └── img/             # Image assets
+├── src/
+│   ├── assets/          # Frontend assets
+│   ├── lib/             # Utilities and libraries
+│   │   ├── Components/  # Reusable UI components
+│   │   │   ├── Auth/    # Authentication components
+│   │   │   ├── Employee/ # Employee dashboard components
+│   │   │   ├── Events/  # Event management components
+│   │   │   ├── Main/    # Main page components
+│   │   │   ├── Menu/    # Menu display components
+│   │   │   ├── NotFound/ # 404 page components
+│   │   │   ├── Reservations/ # Reservation system components
+│   │   │   └── UserReservations/ # User reservations components
+│   │   └── stores/      # Svelte stores for state management
+│   ├── App.svelte       # Root component
+│   └── main.js          # Entry point
+└── package.json         # Dependencies and scripts
+```
+
+### Backend Structure (`JungleCafe.Server`)
+```
+JungleCafe.Server/
+├── Controllers/         # API endpoints
+├── DTOs/                # Data transfer objects
+├── Models/              # Database entities
+├── Properties/          # Project properties
+├── RequestModels/       # API request models
+├── ResponseModels/      # API response models
+├── Services/            # Business logic
+│   └── Interfaces/      # Service contracts
+└── Program.cs           # Application entry point
+```
+
+## Project Root Structure
+```
+jungle-cafe-website/
+├── docs/                # Documentation
+│   └── images/             # Documentation images
+├── JungleCafe.Client/   # Frontend application (Svelte)
+├── JungleCafe.Server/   # Backend application (.NET)
+├── JungleCafe.sln       # Solution file
+├── LICENSE              # License file
+└── README.md            # Project documentation
+```
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Special thanks to PJATK for the opportunity to develop this project
+- The Svelte and .NET communities for their excellent documentation and resources
+- All contributors who have helped shape this project
+
+## Contact
+
+Project Link: [https://github.com/Szafranee/jungle-cafe-website](https://github.com/Szafranee/jungle-cafe-website)
