@@ -13,7 +13,14 @@ Jungle Cafe is a unique cafe experience where customers can enjoy their favorite
 #### 🌿 Immersive User Experience
 The website offers a seamless, jungle-themed interface that captures the unique atmosphere of the cafe.
 
-![Homepage Screenshot](docs/images/homepage-screenshot-placeholder.png)
+<img alt="Homepage Screenshot" src="docs/images/home_page.png" width="640"/>
+
+#### 🦁 Animal Gallery
+- Expandable gallery of animal images with descriptions and facts
+- Showcases the exotic animals residing in the cafe
+- Detailed information about each animal's species, habitat, and fun facts
+
+<img alt="Animal Gallery Screenshot" src="docs/images/animal_gallery.png" width="640"/>
 
 #### 🔐 User Authentication and Authorization
 - Secure registration and login system
@@ -32,21 +39,13 @@ The website offers a seamless, jungle-themed interface that captures the unique 
 
 <img src="docs/images/menu_page.png" alt="Menu page" width="640"/>
 
-#### 🦁 Animal Gallery
-- Showcases the exotic animals residing in the cafe
-- Detailed information about each animal's species, habitat, and fun facts
-- Interactive elements allowing visitors to learn more about conservation efforts
-
-![Animal Gallery Screenshot](docs/images/animal-gallery-screenshot-placeholder.png)
-
 #### 🗓️ Table Reservation System
 - Interactive calendar showing available slots
 - Table selection based on preferences (location, size, proximity to animals)
-- Automatic email confirmation of bookings (not implemented)
 - Ability to modify or cancel existing reservations
 - Special requests field for custom arrangements
 
-![Reservation System Screenshot](docs/images/reservation-screenshot-placeholder.png)
+<img alt="Table Reservation System Screenshot" src="docs/images/table_reservation_page.png" width="640"/>
 
 #### 📅 Event Management
 - Calendar of upcoming events at the cafe
@@ -54,16 +53,23 @@ The website offers a seamless, jungle-themed interface that captures the unique 
 - Detailed event information with schedule and highlights
 - Past event gallery with photos and highlights
 
-![Events Calendar Screenshot](docs/images/events-screenshot-placeholder.png)
+<img alt="Events Calendar Screenshot" src="docs/images/events_page.png" width="640"/>
+<img alt="Event Details Screenshot" src="docs/images/event_details_page.png" width="640"/>
+<img alt="Past Event Details Screenshot" src="docs/images/past_event_details_page.png" width="640"/>
 
 #### 👨💼 Employee Panel
 - Dashboard for staff to manage daily operations
-- Reservation management interface
-- Menu item availability updates
-- Animal care schedule and records
-- Event planning and coordination tools
+- Reservations, events, menu items and animals management interfaces
+- Different permissions based on roles:
+  - Admin: Full access to all features
+  - Manager: Menu Management, Events Management, Reservations Management, Animals Management
+  - Employee: Menu Management, Events Management, Reservations Management
+  - Caretaker: Animal Management
 
-![Employee Panel Screenshot](docs/images/employee-panel-screenshot-placeholder.png)
+<img alt="Employee Panel Menu Management" src="docs/images/employee_panel_menu.png" width="640"/>
+<img alt="Employee Panel Animals Management" src="docs/images/employee_panel_animals.png" width="640"/>
+<img alt="Employee Panel Events Management" src="docs/images/employee_panel_events.png" width="640"/>
+<img alt="Employee Panel Reservations Management" src="docs/images/employee_panel_reservations.png" width="640"/>
 
 #### 📱 Responsive Design
 - Fully responsive interface that works seamlessly across devices (desktop, tablet, mobile)
