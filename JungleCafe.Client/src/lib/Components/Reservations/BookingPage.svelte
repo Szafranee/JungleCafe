@@ -74,14 +74,14 @@
 </script>
 
 <div class="min-h-screen bg-gray-50 pt-20 pb-12 bg-leaves-pattern bg-blend-overlay">
-    <div class="max-w-7xl mx-auto px-4">
+    <div class="container mx-auto px-4">
         <h1 class="text-4xl font-display text-center mb-12 text-jungle-brown">
             Book a Table
         </h1>
 
-        <div class="grid md:grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 overflow-hidden">
             <!-- Booking Form -->
-            <div class="bg-white rounded-xl shadow-lg p-6">
+            <div class="bg-white rounded-xl shadow-lg p-6 max-w-md mx-auto md:mx-0 md:max-w-full">
                 <h2 class="text-2xl font-semibold mb-6">Reservation Details</h2>
 
                 <form on:submit|preventDefault={handleSubmit} class="space-y-6">

@@ -70,7 +70,9 @@
             </div>
         </div>
 
-        <div class="relative w-[900px] h-[350px] mx-auto">
+        <!-- Wrap the hard-coded wide container in a scrollable div -->
+        <div class="overflow-x-auto md:overflow-visible">
+            <div class="relative w-[900px] h-[350px] mx-auto">
             <!-- Left section with Main tables -->
             <div class="inline-block">
                 <!-- Top row window tables -->
@@ -156,6 +158,7 @@
                         <span>{table?.capacity} seats</span>
                     </button>
                 {/each}
+            </div>
             </div>
         </div>
     {/if}
