@@ -27,10 +27,8 @@ The website offers a seamless, jungle-themed interface that captures the unique 
 
 #### 🍽️ Interactive Menu
 - Categorized display of food and beverages
-- Search and filter options for dietary preferences
 - Detailed item descriptions with ingredients and allergen information
 - Visual gallery of menu items
-- Special promotions and deals section
 
 <img src="docs/images/menu_page.png" alt="Menu page" width="640"/>
 
@@ -38,14 +36,13 @@ The website offers a seamless, jungle-themed interface that captures the unique 
 - Showcases the exotic animals residing in the cafe
 - Detailed information about each animal's species, habitat, and fun facts
 - Interactive elements allowing visitors to learn more about conservation efforts
-- Regular updates when new animals join the cafe family
 
 ![Animal Gallery Screenshot](docs/images/animal-gallery-screenshot-placeholder.png)
 
 #### 🗓️ Table Reservation System
 - Interactive calendar showing available slots
 - Table selection based on preferences (location, size, proximity to animals)
-- Automatic email confirmation of bookings
+- Automatic email confirmation of bookings (not implemented)
 - Ability to modify or cancel existing reservations
 - Special requests field for custom arrangements
 
@@ -55,7 +52,6 @@ The website offers a seamless, jungle-themed interface that captures the unique 
 - Calendar of upcoming events at the cafe
 - Event registration and ticketing
 - Detailed event information with schedule and highlights
-- Automatic reminders for registered attendees
 - Past event gallery with photos and highlights
 
 ![Events Calendar Screenshot](docs/images/events-screenshot-placeholder.png)
@@ -73,7 +69,6 @@ The website offers a seamless, jungle-themed interface that captures the unique 
 - Fully responsive interface that works seamlessly across devices (desktop, tablet, mobile)
 - Optimized layouts for different screen sizes
 - Touch-friendly interface elements
-- Offline capabilities for viewing basic information
 
 ![Responsive Design Screenshot](docs/images/responsive-design-screenshot-placeholder.png)
 
@@ -371,4 +366,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
-Project Link: [https://github.com/Szafranee/jungle-cafe-website](https://github.com/Szafranee/jungle-cafe-website)
+Project Link: [https://github.com/Szafranee/JungleCafe](https://github.com/Szafranee/JungleCafe)
