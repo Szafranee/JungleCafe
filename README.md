@@ -76,7 +76,8 @@ The website offers a seamless, jungle-themed interface that captures the unique 
 - Optimized layouts for different screen sizes
 - Touch-friendly interface elements
 
-![Responsive Design Screenshot](docs/images/responsive-design-screenshot-placeholder.png)
+<img alt="Responsive Design Screenshot 1" src="docs/images/mobile_view_1.png" width="320"/>
+<img alt="Responsive Design Screenshot 2" src="docs/images/mobile_view_2.png" width="320"/>
 
 ## Technical Implementation
 
