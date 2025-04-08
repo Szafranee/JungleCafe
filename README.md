@@ -162,7 +162,6 @@ The application uses SQL Server with the following key entities:
 7. Access the application:
    - Frontend: http://localhost:5173
    - API: http://localhost:5000
-   - Swagger UI: http://localhost:5000/swagger
 
 ## API Documentation
 
@@ -266,37 +265,6 @@ curl -X POST https://your-api-url/api/animals \
 - **Swashbuckle**: Swagger UI implementation
 - **AutoMapper**: Object-to-object mapping
 - **FluentValidation**: Request validation
-
-## Deployment Instructions
-
-### Azure Deployment
-1. Build the client:
-   ```bash
-   cd JungleCafe.Client
-   npm run build
-   ```
-
-2. Publish the server:
-   ```bash
-   cd ../JungleCafe.Server
-   dotnet publish -c Release -o ./publish
-   ```
-
-3. Deploy to Azure App Service:
-   - Create an Azure App Service
-   - Set up deployment from GitHub or upload manually
-   - Configure environment variables for database connection
-
-### Docker Deployment
-1. Build the Docker images:
-   ```bash
-   docker-compose build
-   ```
-
-2. Run the containers:
-   ```bash
-   docker-compose up -d
-   ```
 
 ## Contributing
 
