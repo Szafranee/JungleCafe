@@ -6,7 +6,9 @@ Final project for TIN (Internet Technologies) class at PJATK (V semester)
 
 ## Project Description
 
-Jungle Cafe is a unique cafe experience where customers can enjoy their favorite beverages and meals while being surrounded by exotic animals. This web application provides an online platform for customers to view the menu, book tables, and stay updated on upcoming events.
+Jungle Cafe\* is a unique cafe experience where customers can enjoy their favorite beverages and meals while being surrounded by exotic animals. This web application provides an online platform for customers to view the menu, book tables, and stay updated on upcoming events.
+
+<sub>\* Jungle Cafe is a conceptual establishment created for educational purposes.</sub>
 
 ### Key Features
 
@@ -24,9 +26,7 @@ The website offers a seamless, jungle-themed interface that captures the unique 
 
 #### 🔐 User Authentication and Authorization
 - Secure registration and login system
-- Role-based access control (Customer, Employee, Admin)
-- Profile management with personal information and preferences
-- Password reset functionality
+- Role-based access control (Customer, Employee, Manager, Animal Caretaker, Admin)
 - JWT-based authentication for API endpoints
 
 <img src="docs/images/login_page.png" alt="Login page" width="640"/>
@@ -41,15 +41,15 @@ The website offers a seamless, jungle-themed interface that captures the unique 
 
 #### 🗓️ Table Reservation System
 - Interactive calendar showing available slots
-- Table selection based on preferences (location, size, proximity to animals)
-- Ability to modify or cancel existing reservations
+- Ability cancel existing reservations
 - Special requests field for custom arrangements
 
 <img alt="Table Reservation System Screenshot" src="docs/images/table_reservation_page.png" width="640"/>
+<img alt="Table My Reservations Screenshot" src="docs/images/my_reservations_page.png" width="640"/>
 
 #### 📅 Event Management
 - Calendar of upcoming events at the cafe
-- Event registration and ticketing
+- Event registration
 - Detailed event information with schedule and highlights
 - Past event gallery with photos and highlights
 
@@ -364,12 +364,6 @@ jungle-cafe-website/
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- Special thanks to PJATK for the opportunity to develop this project
-- The Svelte and .NET communities for their excellent documentation and resources
-- All contributors who have helped shape this project
 
 ## Contact
 
