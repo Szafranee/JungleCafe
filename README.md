@@ -1,4 +1,4 @@
-# Jungle Cafe Website
+# Jungle Cafe
 
 <img src="docs/images/jungle_cafe_logo.png" alt="Jungle Cafe Logo" width="150"/>
 
